@@ -7,10 +7,6 @@ Node.js + Koa.js + Mongoose + EsLint
 # Tabla de Contenido
 
 - [Tabla de Contenido](#tabla-de-contenido)
-  - [Introducción](#introducci%c3%b3n)
-  - [Episodios](#episodios)
-  - [Stack](#stack)
-  - [Estructura del Proyecto](#estructura-del-proyecto)
   - [Proposito de este Episodio](#proposito-de-este-episodio)
     - [Como lo haremos:](#como-lo-haremos)
   - [Requisitos](#requisitos)
@@ -19,47 +15,6 @@ Node.js + Koa.js + Mongoose + EsLint
   - [Cofiguración de ESlint y Prettier](#cofiguraci%c3%b3n-de-eslint-y-prettier)
     - [EsLint](#eslint)
     - [Prettier](#prettier)
-
-## Introducción
-Este Workshop intenta ayudar a comprender como construir una Api Rest usando Node.js con la librería Koa.js. Dividiremos el taller en varias sesiones que llamaremos Episodios, en cada uno agregaremos algún complemento que nos ayudará a entender como ir armando nuestro proyecto de Api Rest.
-
-## Episodios
-En cada episodio iremos complementando nuestro proyecto.
-
-- **Episodio 1**: Creando mi primera API rest en Node.js y MongoDB
-
-## Stack
-- [Koa](https://github.com/koajs/koa) - Middleware para node.js la cual usa funciones asincronas ES2017. Esta librería esta hecha por el equipo de express, y es más ligera que express.
-- [Mongoose](https://mongoosejs.com/) - proporciona una solución directa basada en esquemas para modelar los datos de su aplicación con MongoDB
-- [EsLint](https://eslint.org/) - ESLint es una herramienta para identificar e informar sobre ruptura de estandares encontrados en el código ECMAScript / JavaScript.
-- [Prettier](https://prettier.io/) - Formateador de código, que nos ayuda a mantener limpio y alienado a los estandares.
-
-## Estructura del Proyecto
-```
-|-- api-rest-nodejs-workshop
-    |-- .editorconfig
-    |-- .eslintignore
-    |-- .eslintrc.yml
-    |-- .gitignore
-    |-- env-example.yaml
-    |-- env.yaml
-    |-- package-lock.json
-    |-- package.json
-    |-- README.md
-    |-- src
-        |-- routes.js
-        |-- server.js
-        |-- controllers
-        |   |-- person.controller.js
-        |-- models
-        |   |-- person.model.js
-        |-- repositories
-        |   |-- person.repository.js
-        |-- routes
-        |   |-- person.route.js
-        |-- schemas
-        |-- utils
-```
 
 ## Proposito de este Episodio
 El objetivo principal, es implementar un endpoint que nos permita obtener un registro de una base de datos MongoDB, el endpoint final debe ser similar a http://localhost:3000/person/99 donde 99 es un parametro llamado index usado para recuperar una persona determinada de la base de datos de contactos de ejemplo.
