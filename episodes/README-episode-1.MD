@@ -363,7 +363,7 @@ Cuando ejecutamos el comando se nos presenta una serie de preguntas que debemos 
 Recuerda haber instalado el plugging de prettier (mencionado en los requisitos)
 3. Instalamos Prettier como dependencia de desarrollo:
 ```bash
-npm i --save-dev prettier
+npm i --save-dev prettier eslint-config-prettier eslint-plugin-prettier
 ```
 4. Creemos el archivo *.prettierrc.js* en la raiz del proyecto y lo editamos con el siguiente codigo:
 ```javascript
