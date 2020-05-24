@@ -336,7 +336,7 @@ http://localhost:3000/person/29
   "address": "921 Karweg Place, Connerton, Arkansas, 3696"
 }
 ```
-## Cofiguración de ESlint y Prettier
+## Configuración de ESlint y Prettier
 ### EsLint
 1. Instalemos eslint como dependencia de desarrollo:
 ```bash
