@@ -7,16 +7,15 @@ Node.js + Koa.js + Mongoose + EsLint
 # Tabla de Contenido
 
 - [Tabla de Contenido](#tabla-de-contenido)
-  - [Proposito de este Episodio](#proposito-de-este-episodio)
+  - [Proposito del Episodio](#proposito-del-episodio)
     - [Como lo haremos:](#como-lo-haremos)
-  - [Requisitos](#requisitos)
   - [Pasos para implementar](#pasos-para-implementar)
   - [Probemos nuestra Api](#probemos-nuestra-api)
-  - [Cofiguración de ESlint y Prettier](#cofiguraci%c3%b3n-de-eslint-y-prettier)
+  - [Configuración de ESlint y Prettier](#configuración-de-eslint-y-prettier)
     - [EsLint](#eslint)
     - [Prettier](#prettier)
 
-## Proposito de este Episodio
+## Proposito del Episodio
 El objetivo principal, es implementar un endpoint que nos permita obtener un registro de una base de datos MongoDB, el endpoint final debe ser similar a http://localhost:3000/person/99 donde 99 es un parametro llamado index usado para recuperar una persona determinada de la base de datos de contactos de ejemplo.
 
 ### Como lo haremos:
@@ -25,20 +24,6 @@ Comenzaremos estructurando nuestro proyecto, inicializando el proyecto con npm, 
 Asimismo, crearemos las carpetas y los archivos de código necesarios para poner a andar nuestra api. 
 
 Aunque puedes encontrar el proyecto es muy simple, esto tiene el proposito de ayudarte a comprender los pasos y la relación entre cada uno de los elemntos.
-
-## Requisitos
-Antes de empezar revisa ue cumplas con los siguientes requisitos:
-- [Node.js](https://nodejs.org/) puede ser la version LTS o la actual
-- [Git](https://git-scm.com/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- Extensión de VS Code [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
-- Extensión de VS Code [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- Extensión de VS Code [Path Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
-- Extensión de VS Code [Visual Studio IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
-- Extensión de VS Code [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
-- Extensión de VS Code [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- Extensión de VS Code [npm Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
-- Extensión de VS Code [gitignore](https://marketplace.visualstudio.com/items?itemName=codezombiech.gitignore)
 
 ## Pasos para implementar
 Bueno basta de tanta introducción ha llegado la hora de echar código :-)
