@@ -1,22 +1,31 @@
 <h1 align="center">Workshop contruyendo una Api Rest con Node.js</h1>
 
-<h4 align="center">
-Node.js + Koa.js + Mongoose + EsLint
-</h4>
+<h2 align="center">
+Episodio 1: Creando mi primera API rest en Node.js y MongoDB.
+</h2>
 
-# Tabla de Contenido
+## Tabla de Contenido
 
 - [Tabla de Contenido](#tabla-de-contenido)
-  - [Proposito del Episodio](#proposito-del-episodio)
-    - [Como lo haremos:](#como-lo-haremos)
-  - [Pasos para implementar](#pasos-para-implementar)
-  - [Probemos nuestra Api](#probemos-nuestra-api)
-  - [Configuración de ESlint y Prettier](#configuración-de-eslint-y-prettier)
-    - [EsLint](#eslint)
-    - [Prettier](#prettier)
+- [Objetivo General](#objetivo-general)
+- [Objetivos Específicos](#objetivos-específicos)
+  - [Como lo haremos:](#como-lo-haremos)
+- [Pasos para implementar](#pasos-para-implementar)
+- [Probemos nuestra Api](#probemos-nuestra-api)
+- [Configuración de ESlint y Prettier](#configuración-de-eslint-y-prettier)
+  - [EsLint](#eslint)
+  - [Prettier](#prettier)
 
-## Proposito del Episodio
-El objetivo principal, es implementar un endpoint que nos permita obtener un registro de una base de datos MongoDB, el endpoint final debe ser similar a http://localhost:3000/person/99 donde 99 es un parametro llamado index usado para recuperar una persona determinada de la base de datos de contactos de ejemplo.
+## Objetivo General
+Implementar una api rest usando node.js y koa.js la cual nos permita crear o actualziar los datos de una persona en una base de datos en MongoDB. Asimismo, implementar una búsqueda simple.
+
+## Objetivos Específicos
+1. Crear la estuctura del proyecto.
+2. Configuraciones iniciales.
+3. Implementar un endpoint de búsqueda por el campo index que nos devuelva los datos de una única persona.
+4. Implementar un endpoint que permita crear o actualizar los datos de una persona.
+5. Configurar el uso de ESlint y Prettier.
+6. Reto: Implementar un endpoint que permita buscar aquellas personas mediante varios parametros (al menos 3) por color de ojos (eyeColor), país (country), genero (gender). Puedes recibir los parametros via params, query string o body (post). Mejor si el resultado es paginado.
 
 ### Como lo haremos:
 Comenzaremos estructurando nuestro proyecto, inicializando el proyecto con npm, descargando las librerias npm que usaremos. También inicializaremos el repositorio git, el cual nos permitira tener una rama por cada episodio, de esta manera nuestro proyeco puede ir evolucionando sin perder el trabajo que vayamos construtendo en cada episodio.
