@@ -4,8 +4,9 @@
 Node.js + Koa.js + Mongoose + EsLint
 </h4>
 
-![nodejs restfull](images/nodejs-rest-api.png)
-
+<div align="center">
+    <img src="images/nodejs-rest-api.png"  width="100%">
+</div>
 
 ## Tabla de Contenido
 
@@ -92,3 +93,4 @@ En cada episodio iremos complementando nuestro proyecto.
         |   |-- person.schema.js
         |-- utils
 ```
+:wink:
