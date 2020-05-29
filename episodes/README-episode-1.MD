@@ -123,7 +123,7 @@ const PersonModel = mongoose.model('PersonModel', schema)
 module.exports = PersonModel
 
 ```
-15. Dentro de la carpeta *repositories* creamos *person.repository.js* con el siguiente código:
+15. Dentro de la carpeta *repositories* creamos <kbd>person.repository.js</kbd> con el siguiente código:
 ```javascript
 /**
  * person.repository.js
@@ -155,7 +155,7 @@ module.exports = class PersonRepository {
 
 
 ```
-16. Dentro de la carpeta *controllers* creamos *person.controller.js* con el siguiente código:
+16. Dentro de la carpeta *controllers* creamos <kbd>person.controller.js</kbd> con el siguiente código:
 ```javascript
 /**
  * person.controller.js
@@ -198,7 +198,7 @@ module.exports = class PersonController {
 }
 
 ```
-17. Dentro de la carpeta *routes* creamos *person.route.js* con el siguiente código:
+17. Dentro de la carpeta *routes* creamos <kbd>person.route.js</kbd> con el siguiente código:
 ```javascript
 /**
  * person.route.js
@@ -222,7 +222,7 @@ module.exports = router
 
 
 ```
-18. Ahora necesitaos un par de archivos más para poner andar el proyecto, creamos el archivo *routes.js* dentro de *src* con el siguiente codigo:
+18. Ahora necesitaos un par de archivos más para poner andar el proyecto :walking:, creamos el archivo <kbd>routes.js</kbd> dentro de *src* con el siguiente codigo:
 ```javascript
 /**
  * Expone una coleccion de todos los routes de nuestra api, a pesar de que aqui solo se se expone personRoute en la vida real debería exponer todos .
@@ -232,7 +232,7 @@ const personRoute = require('./routes/person.route')
 module.exports = [personRoute]
 
 ```
-19. Ahora crearemos el archivo responsable por inicial la aplicación, creamos el archivo *server.js* dentro de *src*
+19. Ahora crearemos el archivo responsable por inicial la aplicación :zap:, creamos el archivo <kbd>server.js</kbd> dentro de *src*
 ```javascript
 /**
  * server.js
@@ -276,7 +276,7 @@ mongoose
   })
 
 ```
-20. Agreguemos el archivo de configuración *env.yaml* a la raiz del proyecto, con el siguiente coódigo:
+20. Agreguemos el archivo de configuración <kbd>env.yaml</kbd> a la raiz del proyecto, con el siguiente coódigo:
 ```yaml
 development:
     PORT: 3000
@@ -286,12 +286,12 @@ production:
     MONGODB_URL: "mmongodb+srv://tu-usuario:tu-contraseña@cluster0-8hxu4.mongodb.net/contacts?retryWrites=true&w=majority"
 
 ```
-**Nota:** solicita el usuario y contraseña para que los reemplaces en el env.yaml
-21. Ahora agregaremos el nombre del archivo *env.yaml* al archivo *.gitignore*, esto es una mejor practica, ya que nunca debemos exponer credenciales o datos sensibles a repositorios publicos. Simplemente abre el archivo y agrega en una linea nueva *env.yaml*
+:speech_balloon: **Nota:** solicita el usuario y contraseña para que los reemplaces en el <kbd>env.yaml</kbd>
+21. Ahora agregaremos el nombre del archivo <kbd>env.yaml</kbd> al archivo <kbd>.gitignore</kbd>, esto es una mejor practica, ya que nunca debemos exponer credenciales o datos sensibles a repositorios publicos. Simplemente abre el archivo y agrega en una linea nueva *env.yaml*
 
 ## Probemos nuestra Api
-Bien hasta aquí hemos implementado el código para construir nuestra api, pero y como diablos puedo ponerla en marcha y probarla!!
-1. Abrimos el archivo *package.json* que esta en la raiz y agrega dentro de la sección *scripts* la siguiente linea:
+Bien hasta aquí hemos implementado el código para construir nuestra api, pero y como :smiling_imp: puedo ponerla en marcha y probarla!! 
+1. Abrimos el archivo <kbd>package.json</kbd> que esta en la raiz y agrega dentro de la sección <kbd>scripts</kbd> la siguiente linea:
 ```json
 "start": "cross-env NODE_ENV=development nodemon ./src/server.js",
 ```
@@ -299,7 +299,7 @@ Bien hasta aquí hemos implementado el código para construir nuestra api, pero 
 ```bash
 npm start
 ```
-Si todo sale bien 
+Si todo sale bien :v:
 ```bash
 [nodemon] 2.0.4
 [nodemon] to restart at any time, enter `rs`
@@ -311,9 +311,9 @@ the new Server Discover and Monitoring engine, pass option
 { useUnifiedTopology: true } to the MongoClient constructor.
 Escuchando en el puerto 3000
 ```
-**Nota**: Recordemos que hemos implementado dentro de person.route un GET para buscar una persona por el index y un POST que nos permite crear o actualizar los datos de una persona.
+:speech_balloon: **Nota**: Recordemos que hemos implementado dentro de person.route un GET para buscar una persona por el index y un POST que nos permite crear o actualizar los datos de una persona.
 
-3. Para probar nuetros GET abre por el browser o por postman el siguiente link
+3. Para probar nuetros *GET* abre por el browser o por postman el siguiente link
 ```
 http://localhost:3000/person/29
 ```
@@ -333,8 +333,8 @@ http://localhost:3000/person/29
   "address": "921 Karweg Place, Connerton, Arkansas, 3696"
 }
 ```
-5. Para probar el POST, debemos acceder por postman, selecciona en la lista de verbos *POST*
-8. Selecciona *Body*, luego la opción *raw* y luego en la lista de la derecha seleciona *JSON*, pega el siguiente codigo:
+5. Para probar el *POST*, debemos acceder por <kbd>Postman</kbd>, selecciona en la lista de verbos <kbd>POST</kbd>
+8. Selecciona <kbd>Body</kbd>, luego la opción <kbd>raw</kbd> y luego en la lista de la derecha seleciona <kbd>JSON</kbd>, pega el siguiente codigo:
 
 ```json
 {
@@ -350,7 +350,7 @@ http://localhost:3000/person/29
   "address": "921 Karweg Place, Connerton, Arkansas, 3696"
 }
 ```
-**Nota**: si ya existe una persona con index usado entonce se actualizaran los datos, de lo contrario se creará, aqui puedes probar con diferentes valores.
+:speech_balloon: **Nota**: si ya existe una persona con index usado entonce se actualizaran los datos, de lo contrario se creará, aqui puedes probar con diferentes valores.
 
 ## Configuración de ESlint y Prettier
 ### EsLint
