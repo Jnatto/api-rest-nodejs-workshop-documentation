@@ -44,12 +44,12 @@ Bueno basta de tanta introducción ha llegado la hora de echar código :running:
 ```bash
 npm init -y
 ```
-4. Instalemos las principales dependencias que usaremos (koa y algunas librerias de apoyo, moongoose para conectarnos a MongoDb, yenv para manejar la configuarción en un yaml y cross-env para facilitar el manejo de la variable de entorno NODE_ENV), ejecuta el siguiente comando:
+4. Instalemos las principales dependencias que usaremos (<kbd>koa</kbd> y algunas del su ecosistema, <kbd>moongoose</kbd> para conectarnos a MongoDB, <kbd>yenv</kbd> para manejar la configuarción en un yaml y <kbd>cross-env</kbd> para facilitar el manejo de la variable de entorno <kbd>NODE_ENV</kbd>), ejecuta el siguiente comando:
 
 ```bash
 npm i koa koa-router koa-bodyparser koa-logger koa-json mongoose yenv cross-env
 ```
-6. Instalemos nodemon para que escuche si cambiamos nuestro codigo y se reinicie nuestro servidor node, pero la instalaremos como *dependencia de desarrollo* con el siguiente comando:
+6. Instalemos <kbd>nodemon</kbd> para que escuche si cambiamos nuestro codigo y se reinicie nuestro servidor node, pero la instalaremos como *dependencia de desarrollo* con el siguiente comando:
 ```bash
 npm i --save-dev nodemon
 ```
@@ -57,17 +57,17 @@ npm i --save-dev nodemon
 ```bash
 git init
 ```
-8. Ahora agreguemos el archivo .gitignore necesario para no subir al repositorio archivos innecsarios como los modulos npm, apoyate en el pluging gitignore que instalamos en los requisitos. Abre la Paleta de Comandos (*control + shift + p*) y escribe *gitignore*, y selecciona *Add gitignore* y luego escribe *node* en el cuadro de texto.
-9. Agreguemos el archivo *.editorconfig*. Abre de nuevo la Paleta de Comandos (*control + shift + p*) y escribe *editor* y selecciona la opción *Generate .editorconfig*. Este archivo nos permite especificar por ejemplo cuantos espacios tendran nuestros tabs para identar nuestro código.
-10. Editemos el archivo *.editorconfig* y cambia el valor de *indent_size* a **2**
+8. Ahora agreguemos el archivo *.gitignore* necesario para no subir al repositorio archivos innecsarios como los modulos npm, apoyate en el pluging gitignore que instalamos en los requisitos. Abre la Paleta de Comandos (<kbd>control + shift + p</kbd>) y escribe <kbd>gitignore</kbd>, y selecciona <kbd>Add gitignore</kbd> y luego escribe <kbd>node</kbd> en el cuadro de texto.
+9. Agreguemos el archivo *.editorconfig*. Abre de nuevo la Paleta de Comandos (<kbd>control + shift + p</kbd>) y escribe <kbd>editor</kbd> y selecciona la opción <kbd>Generate .editorconfig</kbd>. Este archivo nos permite especificar por ejemplo cuantos espacios tendran nuestros tabs para identar nuestro código.
+10. Editemos el archivo <kbd>.editorconfig</kbd> y cambia el valor de <kbd>indent_size</kbd> a **2**
 11. Ok, ahora creemos las carpetas que usaremos para estructurar nuestro proyecto:
-12. Crea la carpeta *src* en la raiz del proyecto
+12. Crea la carpeta <kbd>src</kbd> en la raiz del proyecto
 13. Dentro de la carpeta *src* creamos las siguientes carpetas vacias para ir estructurando nuestro proyecto:
-  - models
-  - repositories
-  - controllers
-  - routes
-14. Dentro de la carpeta *models* creamos *person.model.js* con el siguiente código:
+  - <kbd>models</kbd>
+  - <kbd>repositories</kbd>
+  - <kbd>controllers</kbd>
+  - <kbd>routes</kbd>
+14. Dentro de la carpeta *models* creamos <kbd>person.model.js</kbd> con el siguiente código:
 ```javascript
 /**
  * person.model.js
