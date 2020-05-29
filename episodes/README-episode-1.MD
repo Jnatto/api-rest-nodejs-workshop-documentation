@@ -286,7 +286,8 @@ production:
     MONGODB_URL: "mmongodb+srv://tu-usuario:tu-contraseña@cluster0-8hxu4.mongodb.net/contacts?retryWrites=true&w=majority"
 
 ```
-:speech_balloon: **Nota:** solicita el usuario y contraseña para que los reemplaces en el <kbd>env.yaml</kbd>
+:speech_balloon: **Nota:** solicita el usuario y contraseña para que los reemplaces en el <kbd>env.yaml</kbd>.
+
 21. Ahora agregaremos el nombre del archivo <kbd>env.yaml</kbd> al archivo <kbd>.gitignore</kbd>, esto es una mejor practica, ya que nunca debemos exponer credenciales o datos sensibles a repositorios publicos. Simplemente abre el archivo y agrega en una linea nueva *env.yaml*
 
 ## Probemos nuestra Api
