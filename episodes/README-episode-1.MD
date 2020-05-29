@@ -44,7 +44,7 @@ Bueno basta de tanta introducción ha llegado la hora de echar código :running:
 ```bash
 npm init -y
 ```
-4. Instalemos las principales dependencias que usaremos (<kbd>koa</kbd> y algunas del su ecosistema, <kbd>moongoose</kbd> para conectarnos a MongoDB, <kbd>yenv</kbd> para manejar la configuarción en un yaml y <kbd>cross-env</kbd> para facilitar el manejo de la variable de entorno <kbd>NODE_ENV</kbd>), ejecuta el siguiente comando:
+4. Instalemos las principales dependencias que usaremos (<kbd>koa</kbd> y algunas del su ecosistema, <kbd>mongoose</kbd> para conectarnos a MongoDB, <kbd>yenv</kbd> para manejar la configuarción en un yaml y <kbd>cross-env</kbd> para facilitar el manejo de la variable de entorno <kbd>NODE_ENV</kbd>), ejecuta el siguiente comando:
 
 ```bash
 npm i koa koa-router koa-bodyparser koa-logger koa-json mongoose yenv cross-env
@@ -432,5 +432,5 @@ npm run lint:show
 ```bash
 npm run lint:fix
 ```
-9. Vuelve a ejecutar el comando: *npm run lint:show* y veras que o no tienes errores o bajo la cantidad
-10. Probemos nuestro código de nuevo: ejecuta *npm start* y accede por postman o el browser a http://localhost:3000/person/29
+9. Vuelve a ejecutar el comando: <kbd>npm run lint:show</kbd> y veras que no tienes errores o bajo la cantidad
+10. Probemos nuestro código de nuevo: ejecuta <kbd>npm start</kbd> y accede por postman o el browser a http://localhost:3000/person/29
