@@ -334,7 +334,8 @@ http://localhost:3000/person/29
   "address": "921 Karweg Place, Connerton, Arkansas, 3696"
 }
 ```
-5. Para probar el *POST*, debemos acceder por <kbd>Postman</kbd>, selecciona en la lista de verbos <kbd>POST</kbd>
+5. Para probar el *POST*, debemos acceder por <kbd>Postman</kbd>, selecciona en la lista de verbos <kbd>POST</kbd>.
+
 8. Selecciona <kbd>Body</kbd>, luego la opción <kbd>raw</kbd> y luego en la lista de la derecha seleciona <kbd>JSON</kbd>, pega el siguiente codigo:
 
 ```json
@@ -355,7 +356,7 @@ http://localhost:3000/person/29
 
 ## Configuración de ESlint y Prettier
 ### EsLint
-1. Instalemos eslint como dependencia de desarrollo:
+1. Instalemos <kbd>eslint</kbd> como dependencia de desarrollo:
 ```bash
 npm i --save-dev eslint
 ```
@@ -363,9 +364,10 @@ npm i --save-dev eslint
 ```bash
 npx eslint --init
 ```
-**Notas:** 
-npx nos permite ejecutar scripts de paquetes que se encuentra dentro del proyecto (carpeta node_modules).
-Cuando ejecutamos el comando se nos presenta una serie de preguntas que debemos elegir, para efectos de este demos, seleccionar los siguiente:
+:speech_balloon: **Nota:** 
+*npx* nos permite ejecutar scripts de paquetes que se encuentra dentro del proyecto (carpeta *node_modules*) la cual es donde se instalan las librerias que instalemos con npm i o npm install.
+
+3. Cuando ejecutamos el comando anterior, se nos presenta una serie de preguntas que debemos elegir, para efectos de este demos, seleccionar los siguiente:
 - To check syntax, find problems, and enforce code style
 - CommonJs
 - Node of these
@@ -377,12 +379,12 @@ Cuando ejecutamos el comando se nos presenta una serie de preguntas que debemos 
 - Instalar dependencias necesarass (Y)
   
 ### Prettier
-Recuerda haber instalado el plugging de prettier (mencionado en los requisitos)
-3. Instalamos Prettier como dependencia de desarrollo:
+Recuerda haber instalado el plugin de prettier (mencionado en los requisitos)
+4. Instalamos <kbd>Prettier</kbd> como dependencia de desarrollo:
 ```bash
 npm i --save-dev prettier eslint-config-prettier eslint-plugin-prettier
 ```
-4. Creemos el archivo *.prettierrc.js* en la raiz del proyecto y lo editamos con el siguiente codigo:
+5. Creemos el archivo <kbd>.prettierrc.js</kbd> en la raiz del proyecto y lo editamos con el siguiente codigo:
 ```javascript
 module.exports = {
   "endOfLine": "lf",
@@ -394,7 +396,7 @@ module.exports = {
   endOfLine: "auto"
 };
 ```
-5. Editemos el archivo de configuración de eslint *.eslintrc.yml* para que tenga los plugins y las extensiones de prettier, reemplaza el contenido por:
+6. Editemos el archivo de configuración de eslint <kbd>.eslintrc.yml</kbd> para que tenga los plugins y las extensiones de prettier, reemplaza el contenido por:
 ```yaml
 env:
   commonjs: true
@@ -416,16 +418,16 @@ plugins:
 rules: {}
 
 ```
-6. Edita el archivo *package.json* y agrega las siguientes lineas a la sección *scripts*, las cuales nos permitiran ejecutar la comprobación si nuestro codigo cumple con los estandares y reglas de eslint:
+7. Edita el archivo <kbd>package.json</kbd> y agrega las siguientes lineas a la sección <kbd>scripts</kbd>, las cuales nos permitiran ejecutar la comprobación si nuestro codigo cumple con los estandares y reglas de eslint:
 ```json
 "lint:show": "eslint src/ -f stylish",
 "lint:fix": "eslint --fix --ext .js .",
 ```
-7. Revisemos si tenemos errores que no satisfagan las reglas de eslint, ejecutemos el comando:
+8. Revisemos si tenemos errores que no satisfagan las reglas de eslint, ejecutemos el comando:
 ```bash
 npm run lint:show
 ```
-**Nota**: si tenemos errores se mostraran como resultado en la consola, donde se nos indicaran el archivo y la linea.
+:speech_balloon: **Nota**: si tenemos errores se mostraran como resultado en la consola, donde se nos indicaran el archivo y la linea.
 8. Si tenemos errores, intentemos arreglarlos automaticamente ejecutando el script:
 ```bash
 npm run lint:fix
