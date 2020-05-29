@@ -37,7 +37,7 @@ Aunque puedes encontrar el proyecto es muy simple, esto tiene el proposito de ay
 ## Pasos para implementar
 Bueno basta de tanta introducción ha llegado la hora de echar código :running:
 
-1. Creemos la carpeta raíz de nuestro proyecto, sugiero algo como *api-rest-nodejs*
+1. Creemos la carpeta raíz de nuestro proyecto, sugiero algo como <kbd>api-rest-nodejs</kbd>
 2. Abramos la carpeta con Visual Studio Code
 3. Abre el terminal (puede ser de VS Code o el de tu preferencia pero debes dentro de la carpeta) e inicializa el nuevo proyecto npm, con el comando:
 
