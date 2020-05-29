@@ -35,7 +35,7 @@ Asimismo, crearemos las carpetas y los archivos de código necesarios para poner
 Aunque puedes encontrar el proyecto es muy simple, esto tiene el proposito de ayudarte a comprender los pasos y la relación entre cada uno de los elemntos.
 
 ## Pasos para implementar
-Bueno basta de tanta introducción ha llegado la hora de echar código :-)
+Bueno basta de tanta introducción ha llegado la hora de echar código :running:
 
 1. Creemos la carpeta raíz de nuestro proyecto, sugiero algo como *api-rest-nodejs*
 2. Abramos la carpeta con Visual Studio Code
