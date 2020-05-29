@@ -307,10 +307,13 @@ Si todo sale bien
 [nodemon] watching extensions: js,mjs,json
 [nodemon] starting `node ./src/server.js`
 (node:13568) DeprecationWarning: current Server Discovery and Monitoring engine is deprecated, and will be removed in a future version. To use
-the new Server Discover and Monitoring engine, pass option { useUnifiedTopology: true } to the MongoClient constructor.
+the new Server Discover and Monitoring engine, pass option 
+{ useUnifiedTopology: true } to the MongoClient constructor.
 Escuchando en el puerto 3000
 ```
-3. Ahora solo nos queda probar una petición, puedes usar postman para enviar el request, o como es get puedes enviarla directamente por el browser
+**Nota**: Recordemos que hemos implementado dentro de person.route un GET para buscar una persona por el index y un POST que nos permite crear o actualizar los datos de una persona.
+
+3. Para probar nuetros GET abre por el browser o por postman el siguiente link
 ```
 http://localhost:3000/person/29
 ```
@@ -330,6 +333,25 @@ http://localhost:3000/person/29
   "address": "921 Karweg Place, Connerton, Arkansas, 3696"
 }
 ```
+5. Para probar el POST, debemos acceder por postman, selecciona en la lista de verbos *POST*
+8. Selecciona *Body*, luego la opción *raw* y luego en la lista de la derecha seleciona *JSON*, pega el siguiente codigo:
+
+```json
+{
+  "index": 1001,
+  "age": 36,
+  "eyeColor": "green",
+  "name": "Beach Rutledge",
+  "gender": "male",
+  "company": "URBANSHEE",
+  "country": "PE",
+  "email": "beachrutledge@urbanshee.com",
+  "phone": "+1 (900) 521-2063",
+  "address": "921 Karweg Place, Connerton, Arkansas, 3696"
+}
+```
+**Nota**: si ya existe una persona con index usado entonce se actualizaran los datos, de lo contrario se creará, aqui puedes probar con diferentes valores.
+
 ## Configuración de ESlint y Prettier
 ### EsLint
 1. Instalemos eslint como dependencia de desarrollo:
