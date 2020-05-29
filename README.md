@@ -93,4 +93,3 @@ En cada episodio iremos complementando nuestro proyecto.
         |   |-- person.schema.js
         |-- utils
 ```
-:wink:
