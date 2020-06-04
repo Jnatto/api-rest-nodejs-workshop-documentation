@@ -114,7 +114,7 @@ module.exports = {
 
 7.Ahora indiquemos a nuestra aplicación que use el esquema (*person.schema.js*) y middleware (*schema-validator.js*) creados anteriormente. **Modifiquemos el archivo** <kbd>routes/person.route.js</kbd> para agregar las referencias y utilizarlo en los routes (**fijate en los comentarios que empiezan con** ***NUEVA LINEA:***), el archivo final debe quedar asi:
 
-:speech_balloon: **Nota:** : el código siguiente no contiene la ruta que implementaste en el reto del episodio 1, por lo que respalda esa linea para agregarla luego de copiar el siguiente fragmento.
+:speech_balloon: **Nota:** el código siguiente no contiene la ruta que implementaste en el reto del episodio 1, por lo que respalda esa linea para agregarla luego de copiar el siguiente fragmento.
 
 ``` javascript
 /**
@@ -152,11 +152,13 @@ router.post('person/post', '/', postValidator, controller.save)
 module.exports = router
 ```
 
+8.Ahora puedes iniciar la aplicación y prueba que todo esté funcionando, tambien prueba un caso para ver si la validción funciona, por ejemplo: GET person/XXXX (recuerda que el esquema getByIndex define que el parámetro *index* sean numerico y requerido). Otro caso que puedes probar es que pasaría si envias en la propiedad *gender* un valor que no sea *male* o *female*
+
 ### Manejo de errores
 
 1.Instalemos la librería winston para logear los errores en un archivo de texto:
 
-:speech_balloon: **Nota:** : incluso con winston puedes usar la librerria winston-elasticsearch de su ecosistema para logear en elasticsearch.
+:speech_balloon: **Nota:** incluso con winston puedes usar la librerria winston-elasticsearch de su ecosistema para logear en elasticsearch.
 
 ``` bash
 npm i winston
