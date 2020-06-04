@@ -26,9 +26,9 @@ Implementando validaciones de request y mejores prácticas de manejo de errores.
 
 ### Como lo haremos
 
-Para validar los requests que llegan a nuestros routes, utilizaremos @hapi/joi, el cual nos permite crear esquemas con cada parametro que recibamos ya en cualquiera de las partes de cada request (header, body, params y query), porsteriormente crearemos una función que nos permita pasarle el esquema que intenamos validar y usarlo como middleware en el route antes de llamar a nuestro controlador.
+**Para validar** los requests que llegan a nuestros routes, utilizaremos @hapi/joi, el cual nos permite crear esquemas con los parámetros que recibamos en cualquiera de las partes de cada request (header, body, params y query). Porsteriormente crearemos una función que nos permita pasarle el esquema que intenamos validar y usarlo como *middleware* en el route *person.route.js* antes de llamar a nuestro controlador.
 
-En cuanto al manejo de errores, usaremos la librería winston para logear nuestros errores, aunque podriamos usar cualquier otra librería esto de hecho no es lo más relevante, ya que lo importante es mandejar de manera centralizada nuestros errores e incluso disponer de nuetra logica de negocio para manejar los errores consistentemente.
+**Para el manejo de errores**, usaremos la librería *winston* para logear nuestros errores, aunque podriamos usar cualquier otra librería esto de hecho no es lo más relevante, ya que lo importante es manejar de manera centralizada nuestros errores e incluso disponer de nuetra lógica de negocio para gestionar los errores de manera consistentemente.
 
 Te invito a darle un vistazo a este [excelente documento de mejores parcticas](https://github.com/goldbergyoni/nodebestpractices#2-error-handling-practices)
 
@@ -36,13 +36,13 @@ Te invito a darle un vistazo a este [excelente documento de mejores parcticas](h
 
 ### Validar los request usando @hapi/Joi
 
-1.Creemos otra rama a partir del codigo del episodio anterior:
+1.Creemos otra rama a partir del código del episodio anterior:
 
 ``` bash
 git checkout -b episodio-2
 ```
 
-2.Instalemos la librería <kbd>Joi</kbd> definir esquemas de validacion:
+2.Instalemos la librería <kbd>joi</kbd> definir esquemas de validacion:
 
 ``` bash
 npm i @hapi/joi
@@ -152,7 +152,7 @@ router.post('person/post', '/', postValidator, controller.save)
 module.exports = router
 ```
 
-8.Ahora puedes iniciar la aplicación y prueba que todo esté funcionando, tambien prueba un caso para ver si la validción funciona, por ejemplo: GET person/XXXX (recuerda que el esquema getByIndex define que el parámetro *index* sean numerico y requerido). Otro caso que puedes probar es que pasaría si envias en la propiedad *gender* un valor que no sea *male* o *female*
+8.Ahora puedes iniciar la aplicación y prueba que todo esté funcionando, tambien prueba un caso para ver si la validción funciona, por ejemplo: GET person/XXXX (recuerda que el esquema getByIndex define que el parámetro *index* sean numérico y requerido). Otro caso que puedes probar es, que pasaría si envias en la propiedad *gender* un valor que no sea *male* o *female*
 
 ### Manejo de errores
 
