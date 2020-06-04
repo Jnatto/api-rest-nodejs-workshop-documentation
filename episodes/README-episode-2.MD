@@ -185,7 +185,7 @@ module.exports = async (ctx, next) => {
 
 3.Creemos la carpeta <kbd>logging</kbd> dentro de la carpeta *utils/*
 
-4.Creemos la clase <kbd>app-error.js</kbd> dentro de la carpeta *logging/*
+4.Creemos la clase <kbd>app-error.js</kbd> dentro de la carpeta *logging/* el cual es nuestra propia implementación de la clase Error.
 
 ``` javascript
 /**
@@ -282,6 +282,8 @@ module.exports = {
 
 7.Modifquemos el archivo <kbd>utils/schema-validator.js</kbd>
 
+:speech_balloon: **Nota**: Identificarás las modificaciones del archivo con comentarios que inician con ***LINEA AGREGADA: o LINEA MODIFICADA:***
+
 ``` javascript
 // LINEA AGREGADA: reemplazaremos los ctx.throw por throw errorFactory.
 const errorFactory = require('../utils/logging/error-factory')
@@ -315,6 +317,8 @@ module.exports = validate
 ```
 
 8.Modifquemos el controlador <kbd>person.controller.js</kbd> (ahora ya no validamos si los parametros son inválidos, porque el schema-validator que usamos en person.route lo hace por nosotros)
+
+:speech_balloon: **Nota**: Identificarás las modificaciones del archivo con comentarios que inician con ***LINEA AGREGADA: o LINEA MODIFICADA:***
 
 ``` javascript
 /**
@@ -435,6 +439,8 @@ LOGGER:
 ```
 
 11.Ahora debemos modificar el <kbd>server.js</kbd>, las lineas nuevas y modificadas tienen el comentario ***LINEA AGREGADA o LINEA MODIFICADA***
+
+:speech_balloon: **Nota**: Identificarás las modificaciones del archivo con comentarios que inician con ***LINEA AGREGADA: o LINEA MODIFICADA:***
 
 ``` javascript
 /**
