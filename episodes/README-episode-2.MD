@@ -112,7 +112,7 @@ module.exports = {
 
 ```
 
-7.Ahora ya que en los pasos anteriores tenemos nuestro esquema de validacion y niestro middleware que podemos usar en koa, tendremos que editar el archivo <kbd>routes/person.route.js</kbd> para agregar las referencias y utilizarlo en los routes, el archivo final debe quedar asi:
+7.Ahora indiquemos a nuestra aplicación que use el esquema (*person.schema.js*) y middleware (*schema-validator.js*) creados anteriormente. **Modifiquemos el archivo** <kbd>routes/person.route.js</kbd> para agregar las referencias y utilizarlo en los routes (**fijate en los comentarios que empiezan con** ***NUEVA LINEA:***), el archivo final debe quedar asi:
 
 :speech_balloon: **Nota:** : el código siguiente no contiene la ruta que implementaste en el reto del episodio 1, por lo que respalda esa linea para agregarla luego de copiar el siguiente fragmento.
 
@@ -126,18 +126,20 @@ module.exports = {
  */
 const KoaRouter = require('koa-router')
 const PersonController = require('../controllers/person.controller')
-// referenciamos los esquemas declarados
+
+// NUEVA LINEA: referenciamos los esquemas declarados
 const personSchemas = require('../schemas/person.schema')
-// referenciamos el middleware de validacion de esquemas
+
+// NUEVA LINEA: referenciamos el middleware de validacion de esquemas
 const schemaValidator = require('../utils/schema-validator')
 
 const router = new KoaRouter({ prefix: '/person' })
 const controller = new PersonController()
 
-// creamos una instancia del validador pasandole la parte del request que queremos validar en este caso (params) y el esquema apropiado
+// NUEVA LINEA: creamos una instancia del validador pasandole la parte del request que queremos validar en este caso (params) y el esquema apropiado
 const byIndexValidator = schemaValidator({ params: personSchemas.byIndex })
 
-// creamos una instancia del validador pasandole la parte del request que queremos validar en este caso (body) y el esquema apropiado
+// NUEVA LINEA: creamos una instancia del validador pasandole la parte del request que queremos validar en este caso (body) y el esquema apropiado
 const postValidator = schemaValidator({ body: personSchemas.post })
 
 // GET /person/29
