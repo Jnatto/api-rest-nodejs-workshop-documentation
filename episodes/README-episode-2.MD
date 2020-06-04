@@ -158,12 +158,342 @@ module.exports = router
 
 ### Manejo de errores
 
-1.Instalemos la librería winston para logear los errores en un archivo de texto:
+1.Instalemos la librería [winston](https://github.com/winstonjs/winston#readme) para logear los errores en un archivo de texto:
 
-:speech_balloon: **Nota:** incluso con winston puedes usar la librerria winston-elasticsearch de su ecosistema para logear en elasticsearch.
+:speech_balloon: **Nota:** incluso con winston puedes usar la librerria [winston-elasticsearch](https://github.com/vanthome/winston-elasticsearch#readme) de su ecosistema para logear en elasticsearch.
 
 ``` bash
 npm i winston
 
 ```
-2. 
+
+2.Creemos el archivo <kbd>api-error.js</kbd> dentro de la carpeta *utils/*
+
+``` javascript
+// Middleware que usaremos en nuestra aplicación para procesar los errores
+module.exports = async (ctx, next) => {
+  try {
+    await next()
+  } catch (err) {
+    ctx.status = err.status || 500
+    ctx.body = err.message
+    ctx.app.emit('error', err, ctx)
+  }
+}
+
+```
+
+3.Creemos la carpeta <kbd>logging</kbd> dentro de la carpeta *utils/*
+
+4.Creemos la clase <kbd>app-error.js</kbd> dentro de la carpeta *logging/*
+
+``` javascript
+/**
+ * Implementación de nuestra propia clase de error
+ */
+module.exports = class AppError extends Error {
+  constructor(message, httpStatus = 500, name = 'UnknownError', isOperational = false, innerException = null) {
+    super(message)
+    Error.captureStackTrace(this, AppError)
+    this.message = message
+    this.name = name
+    this.status = httpStatus
+    this.date = new Date()
+    this.isOperational = isOperational
+    this.innerException = innerException
+    this.expose = isOperational
+  }
+}
+
+```
+
+5.Creemos el archivo <kbd>common-errors.js</kbd> dentro de la carpeta *logging/* este archivo contiene para cada una de los errores más relevantes el nombre y el código http.
+
+``` javascript
+module.exports = {
+  InvalidInput: {
+    name: 'InvalidInput',
+    httpStatus: 422,
+  },
+  Unauthorized: {
+    name: 'Unauthorized',
+    httpStatus: 401,
+  },
+  NotFound: {
+    name: 'NotFound',
+    httpStatus: 404,
+  },
+  OperationNotAllowed: {
+    name: 'OperationNotAllowed',
+    httpStatus: 405,
+  },
+  DuplicateItem: {
+    name: 'DuplicateItem',
+    httpStatus: 409,
+  },
+  Conflict: {
+    name: 'Conflict',
+    httpStatus: 409,
+  },
+  BadFormat: {
+    name: 'BadFormat',
+    httpStatus: 400,
+  },
+  UnknownError: {
+    name: 'UnknownError',
+    httpStatus: 500,
+  },
+}
+
+```
+
+6.Creemos el archivo <kbd>error-factory.js</kbd> dentro de la carpeta *loggin/* el cual nos permitirá crear errores de manera consistente.
+
+``` javascript
+const AppError = require('./app-error')
+const commonErrors = require('./common-errors')
+
+module.exports = {
+  InvalidInputError: (message, innerException = null) =>
+    new AppError(message, commonErrors.InvalidInput.httpStatus, commonErrors.InvalidInput.name, true, innerException),
+  UnauthorizedError: (message, innerException = null) =>
+    new AppError(message, commonErrors.Unauthorized.httpStatus, commonErrors.Unauthorized.name, true, innerException),
+  OperationNotAllowedError: (message, innerException = null) =>
+    new AppError(
+      message,
+      commonErrors.OperationNotAllowed.httpStatus,
+      commonErrors.OperationNotAllowed.name,
+      true,
+      innerException,
+    ),
+  NotFoundError: (message, innerException = null) =>
+    new AppError(message, commonErrors.NotFound.httpStatus, commonErrors.NotFound.name, true, innerException),
+  DuplicateItemError: (message, innerException = null) =>
+    new AppError(message, commonErrors.DuplicateItem.httpStatus, commonErrors.DuplicateItem.name, true, innerException),
+  ConflictError: (message, innerException = null) =>
+    new AppError(message, commonErrors.Conflict.httpStatus, commonErrors.Conflict.name, true, innerException),
+  BadFormatError: (message, innerException = null) =>
+    new AppError(message, commonErrors.BadFormat.httpStatus, commonErrors.BadFormat.name, true, innerException),
+  UnknownError: (message, innerException = null) =>
+    new AppError(message, commonErrors.UnknownError.httpStatus, commonErrors.UnknownError.name, false, innerException),
+}
+
+```
+
+7.Modifquemos el archivo <kbd>utils/schema-validator.js</kbd>
+
+``` javascript
+// LINEA AGREGADA: reemplazaremos los ctx.throw por throw errorFactory.
+const errorFactory = require('../utils/logging/error-factory')
+
+const validateRequest = (contextPart, label, schema, options) => {
+  if (!schema) return
+  const { error } = schema.validate(contextPart, options)
+  if (error) {
+    // LINEA MODIFICADA: Manejamos los errores operacionales usando nuestra fabrica de errores
+    throw errorFactory.UnknownError(`Invalid ${label} - ${error.message}`)
+  }
+}
+// middleware de validacion que usaremos para validar los request pasandole un determinado esquema
+const validate = (schema) => (ctx, next) => {
+  try {
+    validateRequest(ctx.headers, 'Headers', schema.headers, { allowUnknown: true })
+    validateRequest(ctx.params, 'URL Parameters', schema.params)
+    validateRequest(ctx.query, 'URL Query', schema.query)
+    if (ctx.request.body) {
+      validateRequest(ctx.request.body, 'Request Body', schema.body)
+    }
+    return next()
+  } catch (error) {
+    // LINEA AGREGADA: Manejamos los errores operacionales usando nuestra fabrica de errores
+    throw errorFactory.InvalidInputError(`Solicitud no válida: ${error.message}`)
+  }
+}
+
+module.exports = validate
+
+```
+
+8.Modifquemos el controlador <kbd>person.controller.js</kbd> (ahora ya no validamos si los parametros son inválidos, porque el schema-validator que usamos en person.route lo hace por nosotros)
+
+``` javascript
+/**
+ * person.controller.js
+ * Responsable por recibir las solicitudes http desde el router person.route.js
+ */
+const PersonRepository = require('../repositories/person.repository')
+
+// LINEA AGREGADA: reemplazaremos los ctx.throw por throw errorFactory.
+const errorFactory = require('../utils/logging/error-factory')
+const repository = new PersonRepository()
+
+module.exports = class PersonController {
+  /**
+   *
+   * @param {object} ctx: contexto de koa que contiene los parameteros de la solicitud, en este caso
+   * desde el url de donde sacaremos el valor del parametro index (ctx.params.index)
+   */
+  async getByIndex(ctx) {
+    const index = ctx.params.index && !isNaN(ctx.params.index) ? parseInt(ctx.params.index) : 0
+    const filter = { index: index }
+    const data = await repository.findOne(filter)
+    if (data) {
+      ctx.body = data
+    } else {
+      // LINEA AGREGADA: Manejamos los errores operacionales usando nuestra fabrica de errores
+      throw errorFactory.NotFoundError(`No se ha encontrado la persona con el indice ${index}`)
+    }
+  }
+
+  /**
+   *
+   * @param {object} ctx: contexto de koa que contiene los parameteros de la solicitud, en este caso desde el body,
+   * obtendremos las propiedades de la persona a guardar a traves de ctx.request.body
+   */
+  async save(ctx) {
+    const person = ctx.request.body
+    await repository.save(person, true)
+    ctx.body = person
+  }
+
+  async getByQuery(ctx) {
+    const filter = Object.assign({}, ctx.query)
+    if (ctx.query.page) delete filter.page
+    if (ctx.query.size) delete filter.size
+    const page = ctx.query.page && !isNaN(ctx.query.page) ? parseInt(ctx.query.page) : 1
+    const size = ctx.query.size && !isNaN(ctx.query.size) ? parseInt(ctx.query.size) : 10
+    const data = await repository.find(filter, page, size)
+    if (data) {
+      ctx.body = data
+    } else {
+      // LINEA AGREGADA: Manejamos los errores operacionales usando nuestra fabrica de errores
+      throw errorFactory.NotFoundError(
+        `No se ha encontrado personas que cumplan son el query ${JSON.stringify(ctx.query)}`,
+      )
+    }
+    ctx.body = data
+  }
+}
+
+```
+
+9.Creemos el archivo <kbd>log-manager.js</kbd> dentro de *loggin/* Este solo es un wrapper de winston, ya que nos facilita que si cambiamos por otra libreria no impacte las otras partes de nuestro código.
+
+``` javascript
+const winston = require('winston')
+const yenv = require('yenv')
+
+const env = yenv()
+
+module.exports = class logManager {
+  constructor() {
+    const transports = []
+    if (env.LOGGER.TARGETS.FILE.ENABLED) {
+      transports.push(
+        new winston.transports.File({ level: env.LOGGER.TARGETS.FILE.LEVEL, filename: env.LOGGER.TARGETS.FILE.PATH }),
+      )
+    }
+
+    this.logger = winston.createLogger({
+      level: 'info',
+      format: winston.format.json(),
+      defaultMeta: { service: 'user-service' },
+      transports: transports,
+    })
+
+    if (process.env.NODE_ENV !== 'production') {
+      this.logger.add(
+        new winston.transports.Console({
+          format: winston.format.simple(),
+        }),
+      )
+    }
+  }
+
+  info(info) {
+    this.logger.info(info)
+  }
+
+  error(appError) {
+    const isOperational = appError.isOperational || false
+    this.logger.error(appError)
+    return isOperational
+  }
+}
+
+```
+
+10.Agreguemos la configuración del logger winston en nuestro archivo de configuración <kbd>env.yaml</kbd>, agregalo debajo de *MONGODB_URL*
+
+``` YAML
+LOGGER:
+      TARGETS:
+        FILE:
+          ENABLED: true
+          LEVEL: "info"
+          PATH: "error.log"
+```
+
+11.Ahora debemos modificar el <kbd>server.js</kbd>, las lineas nuevas y modificadas tienen el comentario ***LINEA AGREGADA o LINEA MODIFICADA***
+
+``` javascript
+/**
+ * server.js
+ * Responsable por inciar nuestra api, inicializa koa con todos sus middleware y tambien inicialzia la conexión de bd
+ */
+const Koa = require('koa')
+const json = require('koa-json')
+const logger = require('koa-logger')
+const bodyParser = require('koa-bodyparser')
+const yenv = require('yenv')
+const mongoose = require('mongoose')
+
+const env = yenv()
+const routes = require('./routes')
+
+// LINEA AGREGADA: referenciar al middleware que manejará los errores
+const apiError = require('./utils/api-error')
+
+// LINEA AGREGADA: referenciar a la clase LogManager
+const LogManager = require('./utils/logging/log-manager')
+
+// Inicializar nuestro servidor usando koa (similar a express)
+const app = new Koa()
+
+// LINEA AGREGADA: instanciar el LogManager
+const logManager = new LogManager()
+
+// Inicializar los middleware
+// LINEA MODIFICADA: agregar .use(apiError) para usar el middleware de manejo de errores en todas las solicitudes
+app.use(bodyParser()).use(json()).use(logger()).use(apiError)
+
+// cargar los routes que escucharan las peticiones http
+routes.map((item) => {
+  app.use(item.routes()).use(item.allowedMethods())
+})
+
+// LINEA AGREGADA: centralizar el manejo de errores con este evento
+app.on('error', (err, ctx) => {
+  console.error('logging error')
+  const isOperationalError = logManager.error(err)
+  if (!isOperationalError) {
+    process.exit(1)
+  }
+})
+
+// abrir la conexión con MongoDB
+mongoose
+  .connect(env.MONGODB_URL, { useNewUrlParser: true })
+  .then(() => {
+    // iniciar el servidor koa para que empiece a escuchar peticiones
+    app.listen(env.PORT, () => {
+      console.log(`Escuchando en el puerto ${env.PORT}`)
+    })
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+
+```
+
+12.Probemos que tal lo hicimos
