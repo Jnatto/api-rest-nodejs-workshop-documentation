@@ -9,8 +9,10 @@ Episodio 2: Implementando validaciones de request y mejores prácticas de manejo
 - [Tabla de Contenido](#tabla-de-contenido)
   - [Objetivo General](#objetivo-general)
   - [Objetivos Específicos](#objetivos-específicos)
-    - [Como lo haremos:](#como-lo-haremos)
+  - [Como lo haremos:](#como-lo-haremos)
   - [Pasos para implementar](#pasos-para-implementar)
+    - [Validar los request usando @hapi/Joi](#validar-los-request-usando-@hapi/Joi)
+    - [Manejo de errores](#manejo-de-errores)
 
 ## Objetivo General
 
@@ -24,7 +26,7 @@ Implementando validaciones de request y mejores prácticas de manejo de errores.
    1. La persistencia, es decir el modelo para que guarde esa propiedad en la misma colección.
    2. Implementar la validación en el post que llama al save, asegurate que el color unicamente pueda recibir las palabras: rojo, azul, verde, si es un color diferente debes devolver un error 422.
 
-### Como lo haremos
+## Como lo haremos
 
 **Para validar** los requests que llegan a nuestros routes, utilizaremos @hapi/joi, el cual nos permite crear esquemas con los parámetros que recibamos en cualquiera de las partes de cada request (header, body, params y query). Porsteriormente crearemos una función que nos permita pasarle el esquema que intenamos validar y usarlo como *middleware* en el route *person.route.js* antes de llamar a nuestro controlador.
 
