@@ -20,8 +20,7 @@ Documentar y probar nuestra api.
 
 1. Documentar nuestra api usando swagger.
 2. Implementar Unit Tests.
-3, Implementar Integration Tests.
-3. Reto: Implementa una prueba unitaria.
+3. Implementar Integration Tests.
 
 ### Como lo haremos
 
