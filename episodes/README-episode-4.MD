@@ -20,13 +20,13 @@ Episodio 4: Desplegar nuestro api rest en la nube.
 
 ## Objetivo General
 
-Desplegar nuestro api rest en la nube usando [AWS API Gateway](https://aws.amazon.com/es/api-gateway/) + [AWS Lambda](https://docs.aws.amazon.com/es_es/lambda/latest/dg/welcome.html) + [Lambda Api](https://www.npmjs.com/package/lambda-api)
+Desplegar nuestro api rest en la nube usando usando un enfoque [Serverless](https://www.nubersia.com/es/blog/tecnologia-serverless-y-sus-ventajas/) 
 
 ## Objetivos Específicos
 
-1. Implementar el código del api rest y preprarlo para que sea ejecutado a mediante una función Lambda.
-2. Crear una función Lamnda y desplegar nuestro código.
-3. Crear un Api en AWS Api Gateway para poder invocarel Lambda como un recurso http.
+1. Implementar el código del api rest y preprarlo para que sea ejecutado a mediante una función de [AWS Lambda](https://docs.aws.amazon.com/es_es/lambda/latest/dg/welcome.html) + el uso de la librería [Lambda Api](https://www.npmjs.com/package/lambda-api).
+2. Crear una función Lambda y desplegar nuestro código.
+3. Crear un Api en [AWS API Gateway](https://aws.amazon.com/es/api-gateway/) para poder invocar la función Lambda como un recurso http.
 4. Probar nuestro api a través de Postman.
 
 ## Requisitos
