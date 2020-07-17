@@ -11,6 +11,8 @@ Episodio 3: Documentando y probando nuestra api.
   - [Objetivos Específicos](#objetivos-específicos)
     - [Como lo haremos:](#como-lo-haremos)
   - [Pasos para implementar](#pasos-para-implementar)
+    - [Documentar con Swagger:](#documentar-con-swagger)
+    - [Implementar los Tests con Jest:](#implementar-los-tests-con-jest)
 
 ## Objetivo General
 
@@ -44,7 +46,7 @@ Si quieres profundizar en el tema de test, te dejo dos excelentes artículos:
 npm i swagger2 swagger2-koa
 ```
 
-3.Ahora crearemos el archivo <kbd>api-docs.js</kbd> dentro de la carpeta *src/utils*
+3. Ahora crearemos el archivo <kbd>api-docs.js</kbd> dentro de la carpeta *src/utils*
 
 ```javascript
 // src/utils/api-docs.js

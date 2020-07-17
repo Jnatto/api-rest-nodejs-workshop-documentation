@@ -12,9 +12,11 @@ Episodio 4: Desplegar nuestro api rest en la nube.
     - [Requisitos:](#requisitos)
     - [Como lo haremos:](#como-lo-haremos)
   - [Pasos para implementar](#pasos-para-implementar)
-    - [Implementar el código de la función Lambda:](#implementar-el-codigo-de-la-funcion-Lambda)
-    - [Crear Función Lambda:](#crear-funcion-lambda)
+    - [Implementar el código de la función Lambda:](#implementar-el-código-de-la-función-Lambda)
+    - [Crear Función Lambda:](#crear-función-lambda)
     - [Configurar API Gateway:](#configurar-api-gateway)
+  - [Artículos que te pueden interesar](#artículos-que-te-pueden-interesar)
+  - [Cursos Gratis On Line](#cursos-gratis-on-line)
 
 ## Objetivo General
 
@@ -22,10 +24,10 @@ Desplegar nuestro api rest en la nube usando AWS Api Gateway + Lambda + Lambda A
 
 ## Objetivos Específicos
 
-1.Implementar el código del api rest preprarlo para que sea ejecutado a travpes de una función Lambda.
-2.Crear una función Lamnda y desplegar nuestro código.
-3.Crear un Api en AWS Api Gateway.
-4.Probar nuestro api a través de postman.
+1. Implementar el código del api rest preprarlo para que sea ejecutado a travpes de una función Lambda.
+2. Crear una función Lamnda y desplegar nuestro código.
+3. Crear un Api en AWS Api Gateway.
+4. Probar nuestro api a través de postman.
 
 ### Requisitos
 
@@ -47,42 +49,44 @@ Sin embargo, en este episodio lo que haremos es desplegar una versión simplific
 
 ### Implementar el código de la función Lambda
 
-1.Creemos una carpeta llamada *lambda-api-demo*
-2.Desde el terminal ingresemos dentro de la carpta
+1. Creemos una carpeta llamada *lambda-api-demo*.
+
+2. Desde el terminal ingresemos dentro de la carpta.
 
 ``` bash
 cd lambda-api-demo
 ```
 
-3.Inicialicemos el proyecyo con npm
+3. Inicialicemos el proyecto con npm.
 
 ``` bash
 npm init -y
 ```
 
-4.Instalemos los módulos npm que vamos a usar
+4. Instalemos los módulos npm que vamos a usar.
 
 ``` bash
 npm i lambda-api yenv mongoose @hapi/joi
 ```
 
-5.Abramos la carpeta con Visual Studio Code
+5. Abrimos la carpeta con Visual Studio Code.
 
-6.Creemos el archivo env.yaml con la cadena de conexión de mongodb
+6. Creemos el archivo <kbd>env.yaml</kbd> con la cadena de conexión de mongodb.
 
 ``` yaml
 development:
   MONGODB_URL: "mongodb+srv://<usuario aqui>:<password aqui>@cluster0-8hxu4.mongodb.net/contacts?retryWrites=true&w=majority"
 
-``` 
+```
 
-7.Creemos la carpeta *src*
+7. Creemos la carpeta *src*
 
-8.Creemos el archivo <kbd>handler.js</kbd>
+8. Creemos el archivo <kbd>handler.js</kbd> el cual será el punto de entrada de ejecución del Lambda.
 
 ```javascript
-// src/utils/api-docs.js
+// src/handler.js
 const yenv = require('yenv');
+// Iniicalizar el api con el path people como prefijo
 const api = require('lambda-api')({ version: 'v1.0', base: 'people' });
 const dbConnector = require('./utils/db-connector');
 const PersonRepository = require('./person.repository');
@@ -92,9 +96,13 @@ const byIndexValidator = schemaValidator({ params: personSchemas.byIndex })
 const postValidator = schemaValidator({ body: personSchemas.post })
 
 const env = yenv();
+// Variable que nos va a permitir reusar las conexiones en varias ejecuciones del lambda
 let cachedConnection;
 let repository;
 
+// Definicón de los Routes
+
+// GET <url base>/people/1000
 api.get('/:index', byIndexValidator, async (req, res) => {
   const index = req.params.index;
   const person = await repository.findOne({ index: index});
@@ -105,6 +113,8 @@ api.get('/:index', byIndexValidator, async (req, res) => {
   }
 });
 
+// GET <url base>/people?eyeColor=green&gender=male
+// Nota: podrias utilizar como parametro cualquier campo de la colección, pero el nombre debe ser exacto y case sensitive.
 api.get('/', async (req, res) => {
   const people = await repository.find(req.query);
   if (people && people.length > 0) {
@@ -114,12 +124,18 @@ api.get('/', async (req, res) => {
   }
 });
 
+// POST <url base>/people
+// Nota: pasar en el body el json con los datos de la persona que deseas actualizar o crear
 api.post('/', postValidator, async (req, res) => {
   const person = req.body;
   await repository.save(person, true);
   res.json(person);
 });
 
+// Atrapar los errores y logearlos.
+// Nota: al logear con los metodos de console (log, error, etc) dentro de un lambda se guardan directamente el cloudwatch
+// Si quieres ver esos logs, dentro de la funcion lambda en la consola de aws haz clic en la pestaña Monitoring
+// y luego en el botón View logs in CloudWatch que aparece en el lado derecho
 api.use((err, req, res, next) => {
   if (err) {
     console.error(err);
@@ -127,7 +143,7 @@ api.use((err, req, res, next) => {
   next();
 })
 
-// Punto de entrada de la función Lambda
+// Punto de entrada de la función Lambda (Handler)
 module.exports.router = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
   const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true, bufferCommands: false, bufferMaxEntries: 0 };
@@ -139,9 +155,10 @@ module.exports.router = async (event, context) => {
 
 ```
 
-9.Creemos el archivo <kbd>person.schema.js</kbd> que usaremos para validar los request de los endpoints
+9. Creemos el archivo <kbd>person.schema.js</kbd> que usaremos para validar los request de los endpoints.
 
 ```javascript
+// src/person.schema.js
 const Joi = require('@hapi/joi')
 
 // esquema de validacion que usaremos en el route GET person/:index
@@ -174,13 +191,10 @@ module.exports = {
 
 ```
 
-10.Creemos el archivo <kbd>person.model.js</kbd> para mapear con la colección de mongodb que usaremos
+10. Creemos el archivo <kbd>person.model.js</kbd> para mapear con la colección de mongodb que usaremos
 
 ```javascript
-/**
- * person.model.js
- * Nos permite gestionar los datos de la colección people de MongoDB
- */
+// src/person.model.js
 const mongoose = require('mongoose');
 const schema = new mongoose.Schema(
   {
@@ -251,9 +265,10 @@ module.exports = {
 
 ```
 
-11.Agreguemos el archivo <kbd>person.repository.js</kbd>
+11. Agreguemos el archivo <kbd>person.repository.js</kbd>
 
 ```javascript
+// person.repository.js
 const PersonModel = require('./person.model');
 
 module.exports = class PersonRepository {
@@ -290,11 +305,12 @@ module.exports = class PersonRepository {
 
 ```
 
-12.Creemos la carpeta *utils* dentro de la carpeta *src*
+12. Creemos la carpeta *utils* dentro de la carpeta *src*
 
-13.Creemos el archivo <kbd>db-connector.js</kbd> el cual usaremos para abrir la conexión con mongodb
+13. Creemos el archivo <kbd>db-connector.js</kbd> el cual usaremos para abrir la conexión con mongodb.
 
 ```javascript
+// src/utils/db-connector.js
 const mongoose = require('mongoose');
 
 module.exports.connect = async (uri, cachedConnection, options) => {
@@ -310,9 +326,10 @@ module.exports.connect = async (uri, cachedConnection, options) => {
 
 ```
 
-14.Creemos el archivo <kbd>schema-validator.js</kbd> el cual usaremos para validar los request mediante los esquemas definos en person.schema.js
+14. Creemos el archivo <kbd>schema-validator.js</kbd> el cual usaremos para validar los request mediante los esquemas definos en person.schema.js
 
 ```javascript
+// src/utils/schema-validator.js
 const validateRequest = (contextPart, label, schema, options) => {
   if (!schema) return
   const { error } = schema.validate(contextPart, options)
@@ -341,79 +358,80 @@ module.exports = validate
 
 ### Crear Función Lambda
 
-1.Abrimos la [consola de AWS](https://console.aws.amazon.com/) e inicia sesión con un usuario con los privilegios necesarios (recuerda qhaber leído la seccion Requisitos)
+1. Abrimos la [consola de AWS](https://console.aws.amazon.com/) e inicia sesión con un usuario con los privilegios necesarios (recuerda haber leído la seccion Requisitos).
 
-2.Asegurate de utilizar la region US East N Virginia (us-east-1)
+2. Asegurate de utilizar la region US East N Virginia (us-east-1).
 
-3.En la caja de texto Find Services, escribe Lambda, y selecciona la opción Lambda.
+3. En la caja de texto ***Find Services***, escribe Lambda, y selecciona la opción Lambda.
 
-4.Desde el dashboard de Lambda (o menú lateral funciones) haz clic en el botón ***Create function****
+4. Desde el dashboard de Lambda (o menú lateral funciones) haz clic en el botón ***Create function****
 
-5.Dejar seleccionada la opción Autor from scratch
+5. Dejar seleccionada la opción ***Autor from scratch***.
 
-6.En function name coloca el nombre ***lambda-api-rest***
+6. En function name coloca el nombre ***lambda-api-rest***
 
-7.En Runtine deja seleccionado Node.js 12.x
+7. En Runtine deja seleccionado ***Node.js 12.x***
 
-8.Haz clic en el botón ***Create function***
+8. Haz clic en el botón ***Create function***
 
-9.Ingresa en la carpeta rapiz de tu código y comprime el contenido de todos los archivos y carpetas, usa cualquier nombre pero el formato debe ser .zip
+9. Ingresa en la carpeta raíz de tu código y comprime el contenido de todos los archivos y carpetas, usa cualquier nombre pero el formato debe ser ***.zip***.
 
-10.Desde la consola de AWS dentro de la función que acabas de crear, ubica el botón*Actions*que esta en la parte superior izquierda del código de la función, elije*Upload a .zip file*, deberas subir el zip generado en el paso anterior
+10. Desde la consola de AWS dentro de la función que acabas de crear, ubica el botón ***Actions*** que esta en la parte superior izquierda del código de la función, elije ***Upload a .zip file***, deberas subir el zip generado en el paso anterior.
 
-11.Por defecto el punto de entrada de la función es index.handler, debemos cambiarlo a ***src/handler.router***, busca la sección Edit basic settings y haz clic en el botón edit y cambia el handler y también en Timeout asegurate que al menos este en 45 segundos en lugar de 3
+11. Por defecto el punto de entrada de la función es index.handler, debemos cambiarlo a ***src/handler.router***, busca la sección ***Edit basic settings*** y haz clic en el botón *Edit* y cambia el *Handler* y también en *Timeout* asegurate que al menos este en 45 segundos en lugar de 3.
 
-12.Haz clic en el botón Save
+12. Haz clic en el botón ***Save***.
 
-13.Asegurate de que el archivo env.yaml tenga la cadena de conexión usuario y contraseña correcta
+13. Asegurate de que el archivo ***env.yaml*** tenga la cadena de conexión usuario y contraseña correcta.
 
-14.Busca la sección Environment variables y haz clic en el botón Manage environment variables y luego en Add environment variables, en key escribe ***NODE_ENV*** y en Value ***development***
+14. Busca la sección ***Environment variables*** y haz clic en el botón *Manage environment variables* y luego en *Add environment variables*, en *key* escribe ***NODE_ENV*** y en *Value* ***development***
 
-15.Haz clic en*Save*
+15. Haz clic en ***Save***
 
 ### Configurar API Gateway
 
-1.Abre el dashboar de [AWS API Gateway](https://console.aws.amazon.com/apigateway/main/apis?region=us-east-1)
+1. Abre el dashboard de [AWS API Gateway](https://console.aws.amazon.com/apigateway/main/apis?region=us-east-1)
 
-2.Haz clic en el botón *Create API*
+2. Haz clic en el botón ***Create API***
 
-3.Selecciona el botpon Build de la opción ***REST API***
+3. Selecciona el botón *Build* de la opción ***REST API***
 
-4.En la sección Choose the protocol elije ***REST***
+4. En la sección Choose the protocol elije ***REST***
 
-5.En Create new API selecciona ***New API***
+5. En Create new API selecciona ***New API***
 
-6.En Settings escribe un nombre para el API
+6. En Settings escribe un nombre para el API
 
-7.En Endpoint Type debe estar seleccionada la opción Regional
+7. En Endpoint Type debe estar seleccionada la opción *Regional*
 
-8.Haz clic en el botón ***Create API***
+8. Haz clic en el botón ***Create API***
 
-9.Haz clic en el botón *Actions* y elije ***Create Resource***
+9. Haz clic en el botón *Actions* y elije ***Create Resource***
 
-10.Selecciona el check de ***proxy resource***
+10. Selecciona el check de ***proxy resource***
 
-11.Selecciona el check ***Enable API Gateway CORS***
+11. Selecciona el check ***Enable API Gateway CORS***
 
-12.Haz clic en el botón ***Create Resource***
+12. Haz clic en el botón ***Create Resource***
 
-13.Ahora en el método *ANY* (que aparece debajo del recurso {proxy+}) asegurate de que este seleccionado ***Lambda Function Proxy*** en la opción *Integration Type*
+13. Ahora en el método *ANY* (que aparece debajo del recurso {proxy+}) asegurate de que este seleccionado ***Lambda Function Proxy*** en la opción *Integration Type*
 
-14.En Lambda Region debes elegir us-east-1 o la misma region donde creaste tu lambda.
+14. En Lambda Region debes elegir *us-east-1* o la misma region donde creaste tu lambda.
 
-15.En Lambda Function escribe el nombre la función Lambda que ceraste en la sección anterior ***lamba-api-rest***
+15. En Lambda Function escribe el nombre la función Lambda que creaste en la sección anterior ***lamba-api-rest***
 
-16.Haz clic en el botón Save y en el pop up de permisos haz clic en ***OK***
+16. Haz clic en el botón *Save* y en el pop up de permisos haz clic en ***OK***
 
-17.Nuevamente haz clic en el botón *Actions* y selecciona ***Deploy API*** elije New Stage ponle el nombre *PRD* y haz clic en *Deploy*
+17. Nuevamente haz clic en el botón *Actions* y selecciona ***Deploy API*** elije New Stage ponle el nombre *PRD* y haz clic en *Deploy*
 
-18.Fijate que ahora debes visualizar el link del del ambiente que acabas de crear, debe aparecer en la parte superior de la pantalla como algo similar a Invoke URL: https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD
+18. Fijate que ahora debes visualizar el link del del ambiente que acabas de crear, debe aparecer en la parte superior de la pantalla como algo similar a ***Invoke URL***: https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD
 
-19.Usa es URL en postman y prueba las siguientes tramas:
+19. Ahora podemos usar este URL en ***Postman*** y prueba las siguientes tramas:
+:speech_balloon: **Nota:** Recuerda sustituir el el texto tu_url_aqui por el url que visualizas en el paso 18.
 
-- GET https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD/people/100
-- GET https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD/people?eyeColor=green&gender=male
-- POST https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD/people/
+- GET tu_url_aqui/PRD/people/100
+- GET tu_url_aqui/PRD/people?eyeColor=green&gender=male
+- POST tu_url_aqui/PRD/people/
 
 ```json
 {
@@ -430,4 +448,22 @@ module.exports = validate
 }
 ```
 
-Si hicimos los pasos correctamente entonces las solicitudes serán exitosas.
+Si hicimos los pasos correctamente entonces las solicitudes serán exitosas :smiley:
+
+## Artículos que te pueden interesar
+
+- [Best Practices Connecting from AWS Lambda](https://docs.atlas.mongodb.com/best-practices-connecting-to-aws-lambda/)
+- [Lambda API (libreria npm)](https://www.npmjs.com/package/lambda-api)
+- [How To: Build a Serverless API with Serverless, AWS Lambda and Lambda API](https://www.jeremydaly.com/build-serverless-api-serverless-aws-lambda-lambda-api/)
+- [Introducción a AWS Lambda](https://docs.aws.amazon.com/es_es/lambda/latest/dg/getting-started.html)
+- [Introducción a Amazon API Gateway](https://docs.aws.amazon.com/es_es/apigateway/latest/developerguide/getting-started.html)
+- [Tutoriales de Amazon API Gateway](https://docs.aws.amazon.com/es_es/apigateway/latest/developerguide/api-gateway-tutorials.html)
+
+## Cursos Gratis On Line
+
+- [AWS Cloud Practitioner Essentials](https://www.aws.training/Details/eLearning?id=46218)
+- [AWS Lambda Foundations](https://www.aws.training/Details/eLearning?id=27197)
+- [Introduction to Serverless Development](https://www.aws.training/Details/eLearning?id=27074)
+- [Getting into the Serverless Mindset](https://www.aws.training/Details/eLearning?id=27198)
+- [Amazon API Gateway for Serverless Applications](https://www.aws.training/Details/eLearning?id=27199)
+- [Architecting Serverless Solutions](https://www.aws.training/Details/eLearning?id=42594)
