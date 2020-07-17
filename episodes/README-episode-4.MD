@@ -67,6 +67,7 @@ npm i lambda-api yenv mongoose @hapi/joi
 ```
 
 5.Abramos la carpeta con Visual Studio Code
+
 6.Creemos el archivo env.yaml con la cadena de conexión de mongodb
 
 ``` yaml
@@ -76,6 +77,7 @@ development:
 ``` 
 
 7.Creemos la carpeta *src*
+
 8.Creemos el archivo <kbd>handler.js</kbd>
 
 ```javascript
@@ -289,6 +291,7 @@ module.exports = class PersonRepository {
 ```
 
 12.Creemos la carpeta *utils* dentro de la carpeta *src*
+
 13.Creemos el archivo <kbd>db-connector.js</kbd> el cual usaremos para abrir la conexión con mongodb
 
 ```javascript
@@ -343,39 +346,69 @@ module.exports = validate
 2.Asegurate de utilizar la region US East N Virginia (us-east-1)
 
 3.En la caja de texto Find Services, escribe Lambda, y selecciona la opción Lambda.
+
 4.Desde el dashboard de Lambda (o menú lateral funciones) haz clic en el botón ***Create function****
+
 5.Dejar seleccionada la opción Autor from scratch
+
 6.En function name coloca el nombre ***lambda-api-rest***
+
 7.En Runtine deja seleccionado Node.js 12.x
+
 8.Haz clic en el botón ***Create function***
+
 9.Ingresa en la carpeta rapiz de tu código y comprime el contenido de todos los archivos y carpetas, usa cualquier nombre pero el formato debe ser .zip
+
 10.Desde la consola de AWS dentro de la función que acabas de crear, ubica el botón*Actions*que esta en la parte superior izquierda del código de la función, elije*Upload a .zip file*, deberas subir el zip generado en el paso anterior
+
 11.Por defecto el punto de entrada de la función es index.handler, debemos cambiarlo a ***src/handler.router***, busca la sección Edit basic settings y haz clic en el botón edit y cambia el handler y también en Timeout asegurate que al menos este en 45 segundos en lugar de 3
+
 12.Haz clic en el botón Save
-13.Asegurate de que el archivo env.yaml tenga la cadena de conexión usuario y contraseña correcta.
+
+13.Asegurate de que el archivo env.yaml tenga la cadena de conexión usuario y contraseña correcta
+
 14.Busca la sección Environment variables y haz clic en el botón Manage environment variables y luego en Add environment variables, en key escribe ***NODE_ENV*** y en Value ***development***
+
 15.Haz clic en*Save*
 
 ### Configurar API Gateway
 
 1.Abre el dashboar de [AWS API Gateway](https://console.aws.amazon.com/apigateway/main/apis?region=us-east-1)
+
 2.Haz clic en el botón *Create API*
+
 3.Selecciona el botpon Build de la opción ***REST API***
+
 4.En la sección Choose the protocol elije ***REST***
+
 5.En Create new API selecciona ***New API***
-6.En Settings escribe un nombre para el APi
+
+6.En Settings escribe un nombre para el API
+
 7.En Endpoint Type debe estar seleccionada la opción Regional
+
 8.Haz clic en el botón ***Create API***
+
 9.Haz clic en el botón *Actions* y elije ***Create Resource***
+
 10.Selecciona el check de ***proxy resource***
+
 11.Selecciona el check ***Enable API Gateway CORS***
-12.HAz clic en el botón ***Create Resource***
+
+12.Haz clic en el botón ***Create Resource***
+
 13.Ahora en el método *ANY* (que aparece debajo del recurso {proxy+}) asegurate de que este seleccionado ***Lambda Function Proxy*** en la opción *Integration Type*
+
 14.En Lambda Region debes elegir us-east-1 o la misma region donde creaste tu lambda.
+
 15.En Lambda Function escribe el nombre la función Lambda que ceraste en la sección anterior ***lamba-api-rest***
+
 16.Haz clic en el botón Save y en el pop up de permisos haz clic en ***OK***
+
 17.Nuevamente haz clic en el botón *Actions* y selecciona ***Deploy API*** elije New Stage ponle el nombre *PRD* y haz clic en *Deploy*
+
 18.Fijate que ahora debes visualizar el link del del ambiente que acabas de crear, debe aparecer en la parte superior de la pantalla como algo similar a Invoke URL: https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD
+
 19.Usa es URL en postman y prueba las siguientes tramas:
 
 - GET https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD/people/100
