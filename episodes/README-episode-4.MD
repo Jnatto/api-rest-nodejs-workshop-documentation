@@ -20,7 +20,7 @@ Episodio 4: Desplegar nuestro api rest en la nube.
 
 ## Objetivo General
 
-Desplegar nuestro api rest en la nube usando usando un enfoque [Serverless](https://www.nubersia.com/es/blog/tecnologia-serverless-y-sus-ventajas/) 
+Desplegar nuestro api rest en la nube usando usando un enfoque [Serverless](https://www.nubersia.com/es/blog/tecnologia-serverless-y-sus-ventajas/).
 
 ## Objetivos Específicos
 
@@ -31,11 +31,11 @@ Desplegar nuestro api rest en la nube usando usando un enfoque [Serverless](http
 
 ## Requisitos
 
-Necesitas tener una cuenta de AWS para poder desplegar, puedes crearla desde [aqui](https://aws.amazon.com/resources/create-account/), si ya dispones de una cuenta, debes logearte con un usuario que tengas los privilegios necesario para crear recursos en Api Gateway, Crear funciones Lambdas e incluso crear roles de IAM.
+:speech_balloon: **Importante:** Necesitas tener una cuenta de AWS para poder desplegar, puedes crearla desde [aqui](https://aws.amazon.com/resources/create-account/), si ya dispones de una cuenta, debes logearte con un usuario que tengas los privilegios necesario para crear recursos en Api Gateway, Crear funciones Lambdas e incluso crear roles de IAM.
 
 ## Como lo haremos
 
-En los episodios anteriores hemos implementado nuestro proyecto con una estructura ideal para desplegar ya sea en una instancia de **AWS EC2** (como una maquina virtual) o también podriamos dockerizar nuestro proyecto y desplegarlo a través de **AWS ECS** (Elastic Container Service).
+En los episodios anteriores hemos implementado nuestro proyecto con una estructura ideal para desplegar ya sea en una instancia de [AWS EC2](https://docs.aws.amazon.com/es_es/AWSEC2/latest/UserGuide/concepts.html) (como una maquina virtual) o también podriamos dockerizar nuestro proyecto y desplegarlo a través de [AWS ECS](https://docs.aws.amazon.com/es_es/AmazonECS/latest/developerguide/Welcome.html) (Elastic Container Service).
 
 Sin embargo, en este episodio lo que haremos es desplegar una versión simplificada de nuestra api usando un enfoque [Serverless](https://www.nubersia.com/es/blog/tecnologia-serverless-y-sus-ventajas/).
 
