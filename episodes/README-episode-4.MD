@@ -1,7 +1,7 @@
 <h1 align="center">Workshop contruyendo una Api Rest con Node.js</h1>
 
 <h2 align="center">
-Episodio 4: Desplegar nuestro api rest en la nube.
+Episodio 4: Desplegar nuestro api rest en la nube usando un enfoque serverless.
 </h2>
 
 # Tabla de Contenido
