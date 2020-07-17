@@ -414,6 +414,8 @@ module.exports = validate
 - GET https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD/people/100
 - GET https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD/people?eyeColor=green&gender=male
 - POST https://dvntyal156.execute-api.us-east-1.amazonaws.com/PRD/people/
+
+```json
 {
     "index": 1000,
     "address": "calle xxxx",
@@ -426,5 +428,6 @@ module.exports = validate
     "name": "Pepe Trueno",
     "phone": "+1 (900) 521-2063"
 }
+```
 
 Si hicimos los pasos correctamente entonces las solicitudes serán exitosas.
