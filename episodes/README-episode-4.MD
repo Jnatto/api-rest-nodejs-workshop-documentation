@@ -356,6 +356,8 @@ module.exports = validate
 
 ```
 
+15. Por último agreguemos el archivo *.gitignore* necesario para no subir al repositorio archivos innecesarios como los modulos npm, apoyate en el pluging gitignore que instalamos en los requisitos. Abre la Paleta de Comandos (<kbd>control + shift + p</kbd>) y escribe <kbd>gitignore</kbd>, y selecciona <kbd>Add gitignore</kbd> y luego escribe <kbd>node</kbd> en el cuadro de texto.
+
 ### Crear Función Lambda
 
 1. Abrimos la [consola de AWS](https://console.aws.amazon.com/) e inicia sesión con un usuario con los privilegios necesarios (recuerda haber leído la seccion Requisitos).
