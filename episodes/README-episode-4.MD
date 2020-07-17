@@ -366,7 +366,7 @@ module.exports = validate
 
 3. En la caja de texto ***Find Services***, escribe Lambda, y selecciona la opción Lambda.
 
-4. Desde el dashboard de Lambda (o menú lateral funciones) haz clic en el botón ***Create function****
+4. Desde el dashboard de Lambda (o menú lateral funciones) haz clic en el botón ***Create function***
 
 5. Dejar seleccionada la opción ***Autor from scratch***.
 
@@ -396,7 +396,7 @@ module.exports = validate
 
 2. Haz clic en el botón ***Create API***
 
-3. Selecciona el botón *Build* de la opción ***REST API***
+3. Selecciona el botón ***Build*** de la opción ***REST API***
 
 4. En la sección Choose the protocol elije ***REST***
 
@@ -422,7 +422,7 @@ module.exports = validate
 
 15. En Lambda Function escribe el nombre la función Lambda que creaste en la sección anterior ***lamba-api-rest***
 
-16. Haz clic en el botón *Save* y en el pop up de permisos haz clic en ***OK***
+16. Haz clic en el botón ***Save*** y luego en el pop up de permisos haz clic en ***OK***
 
 17. Nuevamente haz clic en el botón *Actions* y selecciona ***Deploy API*** elije New Stage ponle el nombre *PRD* y haz clic en *Deploy*
 
