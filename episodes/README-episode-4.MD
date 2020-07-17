@@ -9,8 +9,8 @@ Episodio 4: Desplegar nuestro api rest en la nube.
 - [Tabla de Contenido](#tabla-de-contenido)
   - [Objetivo General](#objetivo-general)
   - [Objetivos Específicos](#objetivos-específicos)
-    - [Requisitos:](#requisitos)
-    - [Como lo haremos:](#como-lo-haremos)
+  - [Requisitos:](#requisitos)
+  - [Como lo haremos:](#como-lo-haremos)
   - [Pasos para implementar](#pasos-para-implementar)
     - [Implementar el código de la función Lambda:](#implementar-el-código-de-la-función-Lambda)
     - [Crear Función Lambda:](#crear-función-lambda)
@@ -20,24 +20,24 @@ Episodio 4: Desplegar nuestro api rest en la nube.
 
 ## Objetivo General
 
-Desplegar nuestro api rest en la nube usando AWS Api Gateway + Lambda + Lambda Api
+Desplegar nuestro api rest en la nube usando [AWS API Gateway](https://aws.amazon.com/es/api-gateway/) + [AWS Lambda](https://docs.aws.amazon.com/es_es/lambda/latest/dg/welcome.html) + [Lambda Api](https://www.npmjs.com/package/lambda-api)
 
 ## Objetivos Específicos
 
-1. Implementar el código del api rest preprarlo para que sea ejecutado a travpes de una función Lambda.
+1. Implementar el código del api rest y preprarlo para que sea ejecutado a mediante una función Lambda.
 2. Crear una función Lamnda y desplegar nuestro código.
-3. Crear un Api en AWS Api Gateway.
-4. Probar nuestro api a través de postman.
+3. Crear un Api en AWS Api Gateway para poder invocarel Lambda como un recurso http.
+4. Probar nuestro api a través de Postman.
 
-### Requisitos
+## Requisitos
 
 Necesitas tener una cuenta de AWS para poder desplegar, puedes crearla desde [aqui](https://aws.amazon.com/resources/create-account/), si ya dispones de una cuenta, debes logearte con un usuario que tengas los privilegios necesario para crear recursos en Api Gateway, Crear funciones Lambdas e incluso crear roles de IAM.
 
-### Como lo haremos
+## Como lo haremos
 
 En los episodios anteriores hemos implementado nuestro proyecto con una estructura ideal para desplegar ya sea en una instancia de **AWS EC2** (como una maquina virtual) o también podriamos dockerizar nuestro proyecto y desplegarlo a través de **AWS ECS** (Elastic Container Service).
 
-Sin embargo, en este episodio lo que haremos es desplegar una versión simplificada de nuestra api usando un enfoque *serverless*.
+Sin embargo, en este episodio lo que haremos es desplegar una versión simplificada de nuestra api usando un enfoque [Serverless](https://www.nubersia.com/es/blog/tecnologia-serverless-y-sus-ventajas/).
 
 **Implementar el código de la función Lambda**, esta vez implementaremos un proyecto nuevo utilizando algunos elemntos de los epidosios anteriores.
 
