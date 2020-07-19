@@ -50,7 +50,8 @@ En cada episodio iremos complementando nuestro proyecto.
 - [Episodio 1: Creando mi primera API rest en Node.js y MongoDB](episodes/README-episode-1.MD)
 - [Episodio 2: Implementando validaciones de request y mejores prácticas de manejo de errores](episodes/README-episode-2.MD)
 - [Episodio 3: Documentando y probando nuestra api](episodes/README-episode-3.MD)
-- [Episodio 4: Desplegando nuestra api en la nube](episodes/README-episode-4.MD)
+- [Episodio 4: Desplegar nuestro api rest en la nube de AWS (Primera Parte)](episodes/README-episode-4.MD)
+- [Episodio 5: Desplegar nuestro api rest en la nube de AWS (Segunda Parte)](episodes/README-episode-5.MD)
 
 ## Stack
 - [Koa](https://github.com/koajs/koa) - Middleware para node.js la cual usa funciones asincronas ES2017. Esta librería esta hecha por el equipo de express, y es más ligera que express.

@@ -1,7 +1,7 @@
 <h1 align="center">Workshop contruyendo una Api Rest con Node.js</h1>
 
 <h2 align="center">
-Episodio 4: Desplegar nuestro api rest en la nube de AWS (Primera Parte).
+Episodio 5: Desplegar nuestro api rest en la nube de AWS (Segunda Parte).
 </h2>
 
 # Tabla de Contenido
@@ -20,18 +20,18 @@ Episodio 4: Desplegar nuestro api rest en la nube de AWS (Primera Parte).
 
 ## Objetivo General
 
-Desplegar nuestro api rest en la nube usando usando un enfoque [Serverless](https://www.nubersia.com/es/blog/tecnologia-serverless-y-sus-ventajas/).
+Conocer otras manera de desplegar en la nube de AWS.
 
 ## Objetivos Específicos
 
-1. Implementar el código del api rest y preprarlo para que sea ejecutado a mediante una función de [AWS Lambda](https://docs.aws.amazon.com/es_es/lambda/latest/dg/welcome.html) + el uso de la librería [Lambda Api](https://www.npmjs.com/package/lambda-api).
-2. Crear una función Lambda y desplegar nuestro código.
-3. Crear un Api en [AWS API Gateway](https://aws.amazon.com/es/api-gateway/) para poder invocar la función Lambda como un recurso http.
-4. Probar nuestro api a través de Postman.
+1. Usar el [Framework Serverless](https://www.serverless.com/framework/docs/) para desplegar via scripts nuestro Lambda y API Gateway.
+2. Desplegar el proyecto implementado hasta el [Episodio 3](README-episode-3.MD) usando un enfoque más tradicional a través de [AWS EC2](https://docs.aws.amazon.com/es_es/AWSEC2/latest/UserGuide/concepts.html)
 
 ## Requisitos
 
-:speech_balloon: **Importante:** Necesitas tener una cuenta de AWS para poder desplegar, puedes crearla desde [aqui](https://aws.amazon.com/resources/create-account/), si ya dispones de una cuenta, debes logearte con un usuario que tengas los privilegios necesario para crear recursos en Api Gateway, Crear funciones Lambdas e incluso crear roles de IAM.
+:speech_balloon: **Importante:**
+1. Necesitas tener una cuenta de AWS para poder desplegar, puedes crearla desde [aqui](https://aws.amazon.com/resources/create-account/), si ya dispones de una cuenta, debes logearte con un usuario que tengas los privilegios necesario para crear recursos en Api Gateway, Crear funciones Lambdas e incluso crear roles de IAM.
+2. Implementar el código de la función Lambda (puedes encontrar los pasos en el Episodio 4 Seccion [Pasos para implementar/Implementar el código de la función Lambda](README-episode-4.MD#pasos-para-implementar)
 
 ## Como lo haremos
 
