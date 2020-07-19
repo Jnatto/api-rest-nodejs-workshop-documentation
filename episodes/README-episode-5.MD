@@ -13,7 +13,9 @@ Episodio 5: Desplegar nuestro api rest en la nube de AWS (Segunda Parte).
   - [Como lo haremos](#como-lo-haremos)
   - [Pasos para implementar](#pasos-para-implementar)
     - [Configuración e Instalación del Framework Serverless](#configuración-e-instalación-del-framework-serverless)
-    - [Crear Proyecto](#crear-proyecto)
+    - [Crear Proyecto Serverless](#crear-proyecto-serverless)
+    - [Eliminar los recursos desplegados](#eliminar-los-recursos-desplegados)
+  - [Otros Comandos importantes del cli de Serverless](#otros-comandos-importantes-del-cli-de-serverless)
 
 ## Objetivo General
 
@@ -65,7 +67,7 @@ npm install -g serverless
   
 :speech_balloon: **Importante:** Guarda las credenciales (Access key ID y Secret access key), puedes hacer clic en el botón Download csv, o hacer clic en el link Show debajo de la columna Secret access key
 
-### Crear Proyecto
+### Crear Proyecto Serverless
 
 1. Abre el terminal y ubicate en la carpeta raiz donde quieres crear el proyecto.
 
@@ -111,9 +113,15 @@ serverless config credentials --provider aws --key <your_access_key> --secret <y
 
 11. Configuremos el archivo ***serverless.yaml*** el cual nos permitirá desplegar por linea de comandos nuestro lambda y la configuración en el API Gateway:
 
-- Ubica la sección ***functions*** (linea 60) y asegurate de que este el siguiente codigo:
+- Asegúrate de que el contenido de tu archivo serverless.yaml sea igual al siguiente fragmento:
 
 ```yaml
+service: serverless-lambda-api-demo
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
 functions:
   serverless-lambda-api:
     name: ${self:service}-${self:provider.stage}-serverless-lambda-api
@@ -121,8 +129,10 @@ functions:
     timeout: 30
     events:
       - http:
-          path: 'v1/{proxy+}'
+          path: 'people/{proxy+}'
           method: any
+    environment:
+     NODE_ENV: development
 ```
 
 12. Listo llegó la hora de Desplegar
@@ -130,5 +140,48 @@ functions:
 ```bash
 serverless deploy
 ```
+13. Si el comando anterior es exitoso verás un mensaje en la consola con la configuración creada, copia el url del ***endpoints***, debe ser algo similar a:
+
+```bash
+endpoints:
+  ANY - https://kynsv88n72.execute-api.us-east-1.amazonaws.com/dev/people/{proxy+}
+```
+:speech_balloon: **Nota:** Usa ese valor del url para hacer tus pruebas.
+
+19. Ahora podemos usar este URL en ***Postman*** y prueba las siguientes tramas:
+:speech_balloon: **Nota:** Recuerda sustituir el el texto tu_url_aqui por el url que visualizas en el paso 18.
+
+- GET tu_url_aqui/dev/people/100
+- GET tu_url_aqui/dev/people?eyeColor=green&gender=male
+- POST tu_url_aqui/dev/people/
+
+```json
+{
+    "index": 1000,
+    "address": "calle xxxx",
+    "age": 36,
+    "company": "BELCORP",
+    "country": "PE",
+    "email": "beachrutledge@urbanshee.com",
+    "eyeColor": "black",
+    "gender": "male",
+    "name": "Pepe Trueno",
+    "phone": "+1 (900) 521-2063"
+}
+```
 
 Si hicimos los pasos correctamente entonces las solicitudes serán exitosas :smiley:
+
+### Eliminar los recursos desplegados
+
+Para eliminar los recursos desplegados (Lambda, API Gateway y Bucket S3), usa el siguiente comando del cli de serverless:
+
+```bash
+serverless remove
+```
+
+## Otros Comandos importantes del cli de Serverless
+
+- [serverless package](https://www.serverless.com/framework/docs/providers/aws/cli-reference/package/) Este comando te permite generar el epaquetado (.zip) del Lambda manualmente.
+- [serverless invoke](https://www.serverless.com/framework/docs/providers/aws/cli-reference/invoke/) Permite incokar a la función Lambda, pero debes considerar que debes pasarle el objeto esperado en el paraetro event.
+- [serverless invoke local](https://www.serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/) Permite incokar a la función Lambda, pero debes considerar que debes pasarle el objeto esperado en el paraetro event.
