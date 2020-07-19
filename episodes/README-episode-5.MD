@@ -12,7 +12,7 @@ Episodio 5: Desplegar nuestro api rest en la nube de AWS (Segunda Parte).
   - [Requisitos](#requisitos)
   - [Como lo haremos](#como-lo-haremos)
   - [Pasos para implementar](#pasos-para-implementar)
-    - [Configuracion e Instalación del Framework Serverless](#configuracion-e-instalación-del-framework-serverless)
+    - [Configuración e Instalación del Framework Serverless](#configuración-e-instalación-del-framework-serverless)
     - [Crear Proyecto](#crear-proyecto)
 
 ## Objetivo General
@@ -36,13 +36,13 @@ Conocer otras manera de desplegar en la nube de AWS.
 
 Este episodio tiene dos partes tal como se menciona en los objetivos especificos.
 
-**Usando Serverless Framework para desplegar**. En el episodio anterior implementamos un Lambda el cual lo desplegamos manualmente, ahora lo que haremos será apoyarnos en el Framewrok Serverless para automatizar este proceso.
+**Usando Serverless Framework para desplegar**. En el episodio anterior implementamos un Lambda el cual lo desplegamos manualmente, ahora lo que haremos será apoyarnos en el Framework Serverless para automatizar este proceso.
 
 **Desplegar el Api usando un enfoque tradicional**. El proyecto que construimos hasta el Epidodio 3, lo desplegaremos en una maquina virtual usando el servicio AWS EC2.
 
 ## Pasos para implementar
 
-### Configuracion e Instalación del Framework Serverless
+### Configuración e Instalación del Framework Serverless
 
 1. Instalemos el framework Serverless via npm:
 
@@ -64,7 +64,6 @@ npm install -g serverless
 - Clic en botón ***Create user***
   
 :speech_balloon: **Importante:** Guarda las credenciales (Access key ID y Secret access key), puedes hacer clic en el botón Download csv, o hacer clic en el link Show debajo de la columna Secret access key
-
 
 ### Crear Proyecto
 
