@@ -14,8 +14,15 @@ Episodio 5: Desplegar nuestro api rest en la nube de AWS (Segunda Parte).
   - [Pasos para implementar](#pasos-para-implementar)
     - [Configuración e Instalación del Framework Serverless](#configuración-e-instalación-del-framework-serverless)
     - [Crear Proyecto Serverless](#crear-proyecto-serverless)
-    - [Eliminar los recursos desplegados](#eliminar-los-recursos-desplegados)
-  - [Otros Comandos importantes del cli de Serverless](#otros-comandos-importantes-del-cli-de-serverless)
+    - [Eliminar los recursos desplegados por serverless](#eliminar-los-recursos-desplegados-por-serverless)
+    - [Desplegar el Api usando un enfoque tradicional con EC2](#desplegar-el-api-usando-un-enfoque-tradicional-con-ec2)
+      - [Crear la máquina virtual en EC2](#crear-la-máquina-virtual-en-ec2)
+      - [Conectarse via SSH a la Instancia](#conectarse-via-ssh-a-la-instancia)
+      - [Configurar el software necesario en la Instancia](#configurar-el-software-necesario-en-la-instancia)
+      - [Descargar nuestro código fuente](#descargar-nuestro-código-fuente)
+  - [Links de Interés](#links-de-interés)
+    - [Otros Comandos Útiles de Serverless Framework](#otros-comandos-útiles-de-serverless-framework)
+    - [Alternativas a Serverless Framework en AWS](#alternativas-a-serverless-framework-en-aws)
 
 ## Objetivo General
 
@@ -172,7 +179,7 @@ endpoints:
 
 Si hicimos los pasos correctamente entonces las solicitudes serán exitosas :smiley:
 
-### Eliminar los recursos desplegados
+### Eliminar los recursos desplegados por serverless
 
 Para eliminar los recursos desplegados (Lambda, API Gateway y Bucket S3), usa el siguiente comando del cli de serverless:
 
@@ -180,8 +187,108 @@ Para eliminar los recursos desplegados (Lambda, API Gateway y Bucket S3), usa el
 serverless remove
 ```
 
-## Otros Comandos importantes del cli de Serverless
+### Desplegar el Api usando un enfoque tradicional con EC2
+
+Esta sección corresponde al *Objetivo Especifico 2*: Desplegar el proyecto implementado hasta el [Episodio 3](README-episode-3.MD) usando un enfoque más tradicional a través de [AWS EC2](https://docs.aws.amazon.com/es_es/AWSEC2/latest/UserGuide/concepts.html)
+
+EC2 es el servicio de maquinas virtuales de AWS.
+
+#### Crear la máquina virtual en EC2
+
+1. Navega al [Dashboard de EC2](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Home:)
+2. Haz clic en el botón naranja ***Launch Instance*** y vuelve a seleccionar Launch Instance
+3. Selecciona la opción ***Amazon Linux 2 AMI (HVM), SSD Volume Type*** haciendo clic en el botón ***Select***
+4. Deja la opción por defecto en Instance Type (t2.micro)
+5. Haz clic en el botón ***Next:Configure Instance Details***
+6. Haz clic en el botón ***Next:Add Storage***
+7. Haz clic en el botón ***Next:Add Tags***
+8. Haz clic en el botón ***Next:Configure Security Group***
+9. Asegurate de que en este paso este seleccionada la opción ***Create a new security group***
+10. Escribe un mombre para el nuevo security group, por ejemplo sgApiRest
+11. Opcionalmente puedes escribir una descripción para que se te haga facil reconocer su configuración, por ejemplo: Grupo de seguridad para habilitar acceso ssh y http
+12. Haz clic en Add Rule para agregarle permisos al puerto http 80 desde cualquier ip de internet.
+13. En el dropdownlist de Type selecciona ***HTTP***
+14. En Source elije ***Anywhere***
+15. Haz clic en el botón ***Review and Launch***
+16. Clic en ***Launch***
+17. Aparecerá un pop up en donde debes seleccionar ***Create a new key pair***, ponle un nombre y haz clic en el botón Download Key Pair. **Importante:** Si no descargas el archivo PEM no podrás conectarte via SSH.
+18. Haz clic en el botón ***View Instances***
+19. Esperar que el valor del campo Instance State esté en running.
+
+#### Conectarse via SSH a la Instancia
+
+:speech_balloon: **Importante:** Para conectarse via SSH depende del Sistema Operativo que utilices, si usas Linux o Mac puedes hacerlo usando el terminal y el comando ssh. En caso de Windows puedes usar la aplicación [Putty](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html).
+
+Para más información pude visitar el link https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html?icmpid=docs_ec2_console
+
+En mi caso uso Linux por lo que usaré los pasos para Linux.
+
+1. Desde la [lista de Instancias](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:) haz clic en el botoón Connect que aparece en la parte superior.
+2. Desde alli verás algunas instrucciones que te pueden ayudar a conectarte.
+3. Si estas en Linux abre desde el terminal la carpeta donde descargaste el archivo de certificado .pem
+4. Fijate que desde la ventana modal que se abrió en el paso 3 te indica el nombre de tu arhivo de certificados, ejeuta el comando que te indica, por ejemplo:
+
+```bash
+chmod 400 my-pem.pem
+```
+5. Copia en comando que te aparece en la ventana modal en la sección de Example: por ejemplo:
+
+```bash
+ssh -i "my-pem.pem" ec2-user@ec2-78-87-208-99.compute-1.amazonaws.com
+```
+6. Escribe ***yes***
+
+#### Configurar el software necesario en la Instancia
+
+1. Ejecuta el comando
+
+```bash
+sudo yum update -y
+```
+
+2. Instalemos Git con el comando:
+
+```bash
+sudo yum install git
+```
+
+3. Instalar node.js 12.x
+
+```bash
+sudo yum install -y gcc-c++ make
+```
+
+```bash
+curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -
+```
+
+```bash
+sudo yum install -y nodejs
+```
+4. Comprueba la versiones de node y npm
+
+```bash
+node -v
+```
+
+```bash
+npm -v
+```
+
+#### Descargar nuestro código fuente
+
+## Links de Interés
+
+### Otros Comandos Útiles de Serverless Framework
 
 - [serverless package](https://www.serverless.com/framework/docs/providers/aws/cli-reference/package/) Este comando te permite generar el epaquetado (.zip) del Lambda manualmente.
 - [serverless invoke](https://www.serverless.com/framework/docs/providers/aws/cli-reference/invoke/) Permite incokar a la función Lambda, pero debes considerar que debes pasarle el objeto esperado en el paraetro event.
 - [serverless invoke local](https://www.serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/) Permite incokar a la función Lambda, pero debes considerar que debes pasarle el objeto esperado en el paraetro event.
+
+### Alternativas a Serverless Framework en AWS
+
+- [AWS Serverless Application Model](https://aws.amazon.com/serverless/sam/) Se trata de un cli similar al serverless framework que nos permite gestionar los Lambdas.
+- [CloudFormation](https://docs.aws.amazon.com/es_es/AWSCloudFormation/latest/UserGuide/Welcome.html) Es un servicio de AWS que nos permite la automatización de la gestion de recursos en AWS, por ejemplo podriamos crear un stack que via cli podamos crear y configurar varios recursos.
+
+
+
