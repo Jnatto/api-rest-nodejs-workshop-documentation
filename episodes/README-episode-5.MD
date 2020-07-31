@@ -311,16 +311,17 @@ vim env.yaml
 
 5. Presiona la tecla insert
 6. Modifica el archivo
-7. Para salir y guardar, presiona la tecla ***Escape*** y luego ***:*** (dos puntos)
+7. Para salir y guardar, presiona la tecla ***Escape*** y luego **:** (dos puntos)
 8. Posteriormente escribe ***wq*** para salir y guardar los cambios.
 9. Finalmente para probar levanta la aplicación:
 
 ```bash
 sudo npm start
 ```
+
 :speech_balloon: **Nota:** El comando anterior se ejecuta con sudo porque necesitamos elevar los permisos para poder correr la aplicación en el purto 80. Si quisieras ejecutar el servicio en otro puerto deberás agregar el puerto al Security Group asignado a la Instancia.
 
-10. Para probar necesitarás copiar desde la consola de AWS EC2, seleccionando la instancia que estas ejecutando para ese ejercicio y desde la pestaña Description copia el valor del campo ***Public DNS (IPv4)****, utilizalo para acceder desde POSTMAN, por ejemplo haz un GET ec2-100-25-157-122.compute-1.amazonaws.com/person/100
+10. Para probar necesitarás copiar desde la consola de AWS EC2, seleccionando la instancia que estas ejecutando para ese ejercicio y desde la pestaña Description copia el valor del campo ***Public DNS (IPv4)***, utilizalo para acceder desde POSTMAN, por ejemplo haz un GET ec2-100-25-157-122.compute-1.amazonaws.com/person/100
 
 ### Eliminar la instancia de EC2
 
