@@ -19,7 +19,8 @@ Episodio 5: Desplegar nuestro api rest en la nube de AWS (Segunda Parte).
       - [Crear la máquina virtual en EC2](#crear-la-máquina-virtual-en-ec2)
       - [Conectarse via SSH a la Instancia](#conectarse-via-ssh-a-la-instancia)
       - [Configurar el software necesario en la Instancia](#configurar-el-software-necesario-en-la-instancia)
-      - [Descargar nuestro código fuente](#descargar-nuestro-código-fuente)
+      - [Descargar y configura el código fuente](#descargar-y-configura-el-código-fuente)
+    - [Eliminar la instancia de EC2](#eliminar-la-instancia-de-ec2)
   - [Links de Interés](#links-de-interés)
     - [Otros Comandos Útiles de Serverless Framework](#otros-comandos-útiles-de-serverless-framework)
     - [Alternativas a Serverless Framework en AWS](#alternativas-a-serverless-framework-en-aws)
@@ -223,20 +224,26 @@ Para más información pude visitar el link https://docs.aws.amazon.com/AWSEC2/l
 
 En mi caso uso Linux por lo que usaré los pasos para Linux.
 
-1. Desde la [lista de Instancias](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:) haz clic en el botoón Connect que aparece en la parte superior.
-2. Desde alli verás algunas instrucciones que te pueden ayudar a conectarte.
-3. Si estas en Linux abre desde el terminal la carpeta donde descargaste el archivo de certificado .pem
+1. Desde la [lista de Instancias](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:) haz clic en el botón Connect que aparece en la parte superior.
+2. Desde alli verás algunas instrucciones que te ayudarán a conectarte.
+3. Si estas en Linux abre desde el terminal la carpeta donde descargaste el archivo de certificado **.pem**
 4. Fijate que desde la ventana modal que se abrió en el paso 3 te indica el nombre de tu arhivo de certificados, ejeuta el comando que te indica, por ejemplo:
 
 ```bash
 chmod 400 my-pem.pem
 ```
-5. Copia en comando que te aparece en la ventana modal en la sección de Example: por ejemplo:
+
+:speech_balloon: **Nota:** El comando *chmod 400 archivo* asegura que el archivo tenga permisos de lectura para el usuario propietario, es un requisito de seguridad para ssh.
+
+5. Copia en comando que te aparece en la ventana modal en la sección de ***Example***: por ejemplo:
 
 ```bash
 ssh -i "my-pem.pem" ec2-user@ec2-78-87-208-99.compute-1.amazonaws.com
 ```
+
 6. Escribe ***yes***
+
+:speech_balloon: **Nota:** Si ejecutaste correctamente todos los pasos despues de escribir *yes* en el paso 6, ya te encuentras conectado a la instancia.
 
 #### Configurar el software necesario en la Instancia
 
@@ -246,13 +253,13 @@ ssh -i "my-pem.pem" ec2-user@ec2-78-87-208-99.compute-1.amazonaws.com
 sudo yum update -y
 ```
 
-2. Instalemos Git con el comando:
+2. Instalemos ***Git*** con el comando:
 
 ```bash
 sudo yum install git
 ```
 
-3. Instalar node.js 12.x
+3. Instalar ***node.js 12.x***
 
 ```bash
 sudo yum install -y gcc-c++ make
@@ -265,6 +272,7 @@ curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -
 ```bash
 sudo yum install -y nodejs
 ```
+
 4. Comprueba la versiones de node y npm
 
 ```bash
@@ -275,7 +283,52 @@ node -v
 npm -v
 ```
 
-#### Descargar nuestro código fuente
+#### Descargar y configura el código fuente
+
+1. Clonemos el repositorio que contiene el último codigod del ***Episodio 3**, si no lo tienes a la mano usa el siguiente:
+
+```bash
+git clone --single-branch --branch episodio3 https://github.com/jriverox/workshop-node.git
+```
+
+2. Ingresa a la carpeta del codigo
+
+```bash
+cd workshop-node
+```
+
+3. Instalar las dependencias
+
+```bash
+cd npm i
+```
+
+4. Edita el archivo env.yaml deberás cambiar el puerto (***PORT***) a 80 y el *usuario* y la *contraseña* por credenciales validas o por una cadena de conexión valida.
+
+```bash
+vim env.yaml
+```
+
+5. Presiona la tecla insert
+6. Modifica el archivo
+7. Para salir y guardar, presiona la tecla ***Escape*** y luego ***:***
+8. Posteriormente escribe ***wq***
+9. Finalmente para probar levanta la aplicación:
+
+```bash
+sudo npm start
+```
+
+10. Para probar necesitarás copiar desde la consola de AWS EC2, seleccionando la instancia que estas ejecutando para ese ejercicio y desde la pestaña Description copia el valor del campo ***Public DNS (IPv4)****, utilizalo para acceder desde POSTMAN, por ejemplo haz un GET ec2-100-25-157-122.compute-1.amazonaws.com/person/100
+
+### Eliminar la instancia de EC2
+
+Una vez que hayas realizado el ejercicio asegurate de terminar la instancia o al menos detenerla.
+
+1. Desde la consola de [AWS EC2](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:)
+2. Selecciona la instancia (asegurate de que el check este seleccionado)
+3. Haz clic en el botón ***Actions***
+4. Selecciona la opción Instance State y luego Terminate
 
 ## Links de Interés
 
@@ -289,6 +342,3 @@ npm -v
 
 - [AWS Serverless Application Model](https://aws.amazon.com/serverless/sam/) Se trata de un cli similar al serverless framework que nos permite gestionar los Lambdas.
 - [CloudFormation](https://docs.aws.amazon.com/es_es/AWSCloudFormation/latest/UserGuide/Welcome.html) Es un servicio de AWS que nos permite la automatización de la gestion de recursos en AWS, por ejemplo podriamos crear un stack que via cli podamos crear y configurar varios recursos.
-
-
-
